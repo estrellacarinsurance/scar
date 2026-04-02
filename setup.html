@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Estrella Car Insurance | Internal Setup Notes</title>
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --text: #0f172a;
+      --muted: #475569;
+      --line: #e2e8f0;
+      --brand: #0b5fff;
+      --max: 980px;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Inter, Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+    }
+    .wrap {
+      width: min(var(--max), calc(100% - 32px));
+      margin: 0 auto;
+      padding: 32px 0 64px;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 32px;
+      margin-bottom: 18px;
+    }
+    h1, h2, h3 { line-height: 1.15; }
+    h1 { margin-top: 0; font-size: clamp(2rem, 4vw, 3rem); }
+    h2 { margin-top: 0; font-size: 1.35rem; }
+    p, li { color: var(--muted); }
+    code, pre {
+      background: #f1f5f9;
+      border: 1px solid #e2e8f0;
+      border-radius: 14px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 13px;
+    }
+    code { padding: 2px 6px; }
+    pre {
+      padding: 14px;
+      overflow: auto;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .note {
+      border-left: 4px solid var(--brand);
+      padding-left: 14px;
+      margin: 12px 0 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <h1>Estrella Car Insurance Internal Setup</h1>
+      <p>This file is for internal use only. Keep it off public navigation. The live consumer-facing page should stay clean and should not show setup instructions, placeholders, or network notes.</p>
+    </div>
+
+    <div class="card">
+      <h2>Lead form placement</h2>
+      <p>Insert your approved embed inside:</p>
+      <pre>&lt;div id="lead-form" class="lead-form-box"&gt;&lt;/div&gt;</pre>
+      <p class="note">Replace that div with your approved iframe, JavaScript embed, or direct form markup when ready.</p>
+    </div>
+
+    <div class="card">
+      <h2>Phone number updates</h2>
+      <p>Replace every public call link and displayed number in <code>index.html</code> with your final tracking number.</p>
+      <ul>
+        <li>Top bar call link</li>
+        <li>Hero secondary button</li>
+        <li>Call card button</li>
+        <li>Sticky mobile call button</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>Compliance notes</h2>
+      <ul>
+        <li>Do not alter required consent language inside the approved form unless allowed.</li>
+        <li>Make sure privacy and terms stay accessible from the footer.</li>
+        <li>Use only approved creatives and call tracking where permitted.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>Recommended next changes</h2>
+      <ul>
+        <li>Add your final phone number and live lead form.</li>
+        <li>Connect analytics and call tracking if your campaign allows it.</li>
+        <li>Create location-specific pages later for SEO if needed.</li>
+        <li>Review all legal copy before launch.</li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>
