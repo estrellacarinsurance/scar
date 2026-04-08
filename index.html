@@ -536,12 +536,14 @@
            <div id="lead-form">
   <form id="quoteForm" class="lead-form-box">
     <input
-      type="tel"
-      name="caller_id"
-      placeholder="Phone Number"
-      required
-      style="width:100%;padding:14px;margin-bottom:12px;border:1px solid #cbd5e1;border-radius:12px;"
-    />
+  type="tel"
+  name="caller_id"
+  placeholder="Phone Number"
+  inputmode="tel"
+  autocomplete="tel"
+  required
+  style="width:100%;padding:14px;margin-bottom:12px;border:1px solid #cbd5e1;border-radius:12px;"
+/>
 
     <input
       type="text"
@@ -709,10 +711,21 @@ document.addEventListener("DOMContentLoaded", function () {
   const form = document.getElementById("quoteForm");
   const message = document.getElementById("formMessage");
 
-  if (!form) {
-    console.log("quoteForm not found");
-    return;
+  function normalizeUSPhone(input) {
+    const digits = (input || "").replace(/\D/g, "");
+
+    if (digits.length === 10) {
+      return "+1" + digits;
+    }
+
+    if (digits.length === 11 && digits.startsWith("1")) {
+      return "+" + digits;
+    }
+
+    return input.trim();
   }
+
+  if (!form) return;
 
   form.addEventListener("submit", async function (e) {
     e.preventDefault();
@@ -720,7 +733,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const formData = new FormData(form);
 
     const payload = {
-      caller_id: formData.get("caller_id")?.trim() || "",
+      caller_id: normalizeUSPhone(formData.get("caller_id")),
       zip_code: formData.get("zip_code")?.trim() || "",
       is_currently_insured: formData.get("is_currently_insured") || "",
       own_home: formData.get("own_home") || "",
