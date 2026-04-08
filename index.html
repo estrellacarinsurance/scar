@@ -535,68 +535,112 @@
            
            <div id="lead-form">
   <form id="quoteForm" class="lead-form-box">
-    <input
-  type="tel"
-  name="caller_id"
-  placeholder="Phone Number"
-  inputmode="tel"
-  autocomplete="tel"
-  required
-  style="width:100%;padding:14px;margin-bottom:12px;border:1px solid #cbd5e1;border-radius:12px;"
-/>
+    <div style="display:grid;gap:12px;">
+      <input
+        type="text"
+        name="zip_code"
+        placeholder="ZIP Code"
+        inputmode="numeric"
+        maxlength="5"
+        required
+        style="width:100%;padding:14px 16px;border:1px solid #cbd5e1;border-radius:12px;font-size:15px;background:#fff;"
+      />
 
-    <input
-      type="text"
-      name="zip_code"
-      placeholder="ZIP Code"
-      required
-      style="width:100%;padding:14px;margin-bottom:12px;border:1px solid #cbd5e1;border-radius:12px;"
-    />
+      <select
+        name="is_currently_insured"
+        required
+        style="width:100%;padding:14px 16px;border:1px solid #cbd5e1;border-radius:12px;font-size:15px;background:#fff;"
+      >
+        <option value="">Currently insured?</option>
+        <option value="Yes">Yes</option>
+        <option value="No">No</option>
+      </select>
 
-    <select
-      name="is_currently_insured"
-      required
-      style="width:100%;padding:14px;margin-bottom:12px;border:1px solid #cbd5e1;border-radius:12px;"
-    >
-      <option value="">Currently insured?</option>
-      <option value="Yes">Yes</option>
-      <option value="No">No</option>
-    </select>
+      <select
+        name="own_home"
+        required
+        style="width:100%;padding:14px 16px;border:1px solid #cbd5e1;border-radius:12px;font-size:15px;background:#fff;"
+      >
+        <option value="">Own home?</option>
+        <option value="Yes">Yes</option>
+        <option value="No">No</option>
+      </select>
 
-    <select
-      name="own_home"
-      required
-      style="width:100%;padding:14px;margin-bottom:12px;border:1px solid #cbd5e1;border-radius:12px;"
-    >
-      <option value="">Own home?</option>
-      <option value="Yes">Yes</option>
-      <option value="No">No</option>
-    </select>
+      <input
+        type="text"
+        name="insurance_carrier"
+        placeholder="Current insurance carrier"
+        style="width:100%;padding:14px 16px;border:1px solid #cbd5e1;border-radius:12px;font-size:15px;background:#fff;"
+      />
 
-    <input
-      type="text"
-      name="insurance_carrier"
-      placeholder="Current insurance carrier"
-      style="width:100%;padding:14px;margin-bottom:12px;border:1px solid #cbd5e1;border-radius:12px;"
-    />
+      <select
+        name="state"
+        required
+        style="width:100%;padding:14px 16px;border:1px solid #cbd5e1;border-radius:12px;font-size:15px;background:#fff;"
+      >
+        <option value="">Select state</option>
+        <option value="AL">AL</option>
+        <option value="AK">AK</option>
+        <option value="AZ">AZ</option>
+        <option value="AR">AR</option>
+        <option value="CA">CA</option>
+        <option value="CO">CO</option>
+        <option value="CT">CT</option>
+        <option value="DE">DE</option>
+        <option value="FL">FL</option>
+        <option value="GA">GA</option>
+        <option value="HI">HI</option>
+        <option value="ID">ID</option>
+        <option value="IL">IL</option>
+        <option value="IN">IN</option>
+        <option value="IA">IA</option>
+        <option value="KS">KS</option>
+        <option value="KY">KY</option>
+        <option value="LA">LA</option>
+        <option value="ME">ME</option>
+        <option value="MD">MD</option>
+        <option value="MA">MA</option>
+        <option value="MI">MI</option>
+        <option value="MN">MN</option>
+        <option value="MS">MS</option>
+        <option value="MO">MO</option>
+        <option value="MT">MT</option>
+        <option value="NE">NE</option>
+        <option value="NV">NV</option>
+        <option value="NH">NH</option>
+        <option value="NJ">NJ</option>
+        <option value="NM">NM</option>
+        <option value="NY">NY</option>
+        <option value="NC">NC</option>
+        <option value="ND">ND</option>
+        <option value="OH">OH</option>
+        <option value="OK">OK</option>
+        <option value="OR">OR</option>
+        <option value="PA">PA</option>
+        <option value="RI">RI</option>
+        <option value="SC">SC</option>
+        <option value="SD">SD</option>
+        <option value="TN">TN</option>
+        <option value="TX">TX</option>
+        <option value="UT">UT</option>
+        <option value="VT">VT</option>
+        <option value="VA">VA</option>
+        <option value="WA">WA</option>
+        <option value="WV">WV</option>
+        <option value="WI">WI</option>
+        <option value="WY">WY</option>
+      </select>
 
-    <input
-      type="text"
-      name="state"
-      placeholder="State (example: FL)"
-      required
-      style="width:100%;padding:14px;margin-bottom:12px;border:1px solid #cbd5e1;border-radius:12px;"
-    />
+      <button
+        type="submit"
+        class="cta-btn"
+        style="border:none;cursor:pointer;width:100%;"
+      >
+        Get My Quote
+      </button>
 
-    <button
-      type="submit"
-      class="cta-btn"
-      style="border:none;cursor:pointer;width:100%;"
-    >
-      Get My Quote
-    </button>
-
-    <p id="formMessage" style="margin-top:12px;color:#475569;font-size:14px;"></p>
+      <p id="formMessage" style="margin:4px 0 0;color:#475569;font-size:14px;"></p>
+    </div>
   </form>
 </div>
 
@@ -706,26 +750,24 @@
     </div>
   </div>
 
-  <script>
+ <script>
 document.addEventListener("DOMContentLoaded", function () {
   const form = document.getElementById("quoteForm");
   const message = document.getElementById("formMessage");
 
-  function normalizeUSPhone(input) {
-    const digits = (input || "").replace(/\D/g, "");
-
-    if (digits.length === 10) {
-      return "+1" + digits;
-    }
-
-    if (digits.length === 11 && digits.startsWith("1")) {
-      return "+" + digits;
-    }
-
-    return input.trim();
+  if (!form || !message) {
+    console.log("Quote form elements not found.");
+    return;
   }
 
-  if (!form) return;
+  function setMessage(text, color) {
+    message.textContent = text;
+    message.style.color = color || "#475569";
+  }
+
+  function sanitizeZip(zip) {
+    return (zip || "").replace(/\D/g, "").slice(0, 5);
+  }
 
   form.addEventListener("submit", async function (e) {
     e.preventDefault();
@@ -733,18 +775,27 @@ document.addEventListener("DOMContentLoaded", function () {
     const formData = new FormData(form);
 
     const payload = {
-      caller_id: normalizeUSPhone(formData.get("caller_id")),
-      zip_code: formData.get("zip_code")?.trim() || "",
-      is_currently_insured: formData.get("is_currently_insured") || "",
-      own_home: formData.get("own_home") || "",
-      insurance_carrier: formData.get("insurance_carrier")?.trim() || "",
-      state: formData.get("state")?.trim() || "",
+      zip_code: sanitizeZip(formData.get("zip_code")),
+      is_currently_insured: (formData.get("is_currently_insured") || "").trim(),
+      own_home: (formData.get("own_home") || "").trim(),
+      insurance_carrier: (formData.get("insurance_carrier") || "").trim(),
+      state: (formData.get("state") || "").trim(),
       landing_page: window.location.href,
       pub_id: "default_pub_id",
       media_type: "web"
     };
 
-    message.textContent = "Submitting...";
+    if (!payload.zip_code || payload.zip_code.length !== 5) {
+      setMessage("Please enter a valid 5-digit ZIP code.", "#b91c1c");
+      return;
+    }
+
+    if (!payload.is_currently_insured || !payload.own_home || !payload.state) {
+      setMessage("Please complete all required fields.", "#b91c1c");
+      return;
+    }
+
+    setMessage("Submitting...", "#475569");
 
     try {
       const response = await fetch("/api/marketcall", {
@@ -756,24 +807,36 @@ document.addEventListener("DOMContentLoaded", function () {
       });
 
       const raw = await response.text();
-      console.log("RAW RESPONSE:", raw);
+      console.log("Worker raw response:", raw);
 
       let result;
       try {
         result = JSON.parse(raw);
       } catch {
-        result = { raw };
+        result = { raw: raw };
       }
 
       if (response.ok && result.ok !== false) {
-        message.textContent = "Success! Your request was submitted.";
+        setMessage("Success! Your request was submitted.", "#166534");
         form.reset();
       } else {
-        message.textContent = "Error: " + (result.response || result.error || result.raw || "Unknown error");
+        let errorText = "Submission failed.";
+
+        if (result.response) {
+          errorText = result.response;
+        } else if (result.error) {
+          errorText = typeof result.error === "string"
+            ? result.error
+            : JSON.stringify(result.error);
+        } else if (result.raw) {
+          errorText = result.raw;
+        }
+
+        setMessage("Error: " + errorText, "#b91c1c");
       }
     } catch (error) {
-      console.error(error);
-      message.textContent = "Network error: " + error.message;
+      console.error("Network error:", error);
+      setMessage("Network error: " + error.message, "#b91c1c");
     }
   });
 });
