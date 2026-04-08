@@ -571,7 +571,7 @@
     type="text"
     name="insurance_carrier"
     id="insurance_carrier"
-    placeholder="Current insurance carrier"
+    placeholder="Current carrier (example: GEICO, Progressive, AAA Insurance)"
     autocomplete="off"
     style="width:100%;padding:14px 16px;border:1px solid #cbd5e1;border-radius:12px;font-size:15px;background:#fff;"
   />
@@ -759,10 +759,8 @@ document.addEventListener("DOMContentLoaded", function () {
   const form = document.getElementById("quoteForm");
   const message = document.getElementById("formMessage");
   const insuredField = document.querySelector('[name="is_currently_insured"]');
-  const ownHomeField = document.querySelector('[name="own_home"]');
   const carrierField = document.getElementById("insurance_carrier");
   const carrierWrap = document.getElementById("carrierWrap");
-  const stateField = document.querySelector('[name="state"]');
   const zipField = document.querySelector('[name="zip_code"]');
 
   if (!form || !message || !insuredField || !carrierField || !carrierWrap) {
@@ -797,31 +795,98 @@ document.addEventListener("DOMContentLoaded", function () {
     ];
 
     if (noInsuranceValues.includes(value)) {
-      return { carrier: "", insured: false };
+      return { carrier: "", insured: false, valid: true };
     }
 
-    const carrierMap = {
-      "geico": "GEICO",
-      "progressive": "Progressive",
-      "state farm": "State Farm",
-      "statefarm": "State Farm",
+    const approvedCarrierMap = {
+      "21st century": "21st Century",
+      "21stcentury": "21st Century",
+
+      "aaa": "AAA Insurance",
+      "aaa insurance": "AAA Insurance",
+
       "allstate": "Allstate",
+
+      "commerce": "Commerce Insurance Co",
+      "commerce insurance": "Commerce Insurance Co",
+      "commerce insurance co": "Commerce Insurance Co",
+
+      "esurance": "Esurance",
+
+      "farmers": "Farmers Insurance",
+      "farmers insurance": "Farmers Insurance",
+
+      "geico": "GEICO",
+
+      "gmac": "GMACNatGenIns",
+      "gmacnatgenins": "GMACNatGenIns",
+
       "liberty mutual": "Liberty Mutual",
       "libertymutual": "Liberty Mutual",
-      "farmers": "Farmers",
+
+      "metlife": "Met Life Insurance",
+      "met life": "Met Life Insurance",
+      "met life insurance": "Met Life Insurance",
+
+      "n": "N",
+
       "nationwide": "Nationwide",
-      "travelers": "Travelers",
-      "american family": "American Family",
-      "americanfamily": "American Family",
+
+      "other": "Other",
+
+      "progressive": "Progressive",
+
+      "safeco": "SAFECO",
+
+      "state farm": "State Farm",
+      "statefarm": "State Farm",
+
+      "the hartford": "The Hartford",
+      "hartford": "The Hartford",
+
+      "travelers": "Travelers Insurance",
+      "travelers insurance": "Travelers Insurance",
+
       "usaa": "USAA",
-      "aaa": "AAA"
+
+      "plymouth rock": "Plymouth Rock",
+      "plymouthrock": "Plymouth Rock",
+
+      "mercury": "Mercury Insurance",
+      "mercury insurance": "Mercury Insurance",
+
+      "safeauto": "SafeAuto",
+      "safe auto": "SafeAuto",
+
+      "ais": "AIS",
+
+      "answer": "AnswerFinancial",
+      "answerfinancial": "AnswerFinancial",
+      "answer financial": "AnswerFinancial",
+
+      "clearlink": "ClearLink",
+      "clear link": "ClearLink",
+
+      "csaa": "CSAA",
+
+      "national general": "National General",
+
+      "foremost": "Foremost"
     };
 
-    if (carrierMap[value]) {
-      return { carrier: carrierMap[value], insured: true };
+    if (approvedCarrierMap[value]) {
+      return {
+        carrier: approvedCarrierMap[value],
+        insured: true,
+        valid: true
+      };
     }
 
-    return { carrier: (input || "").trim(), insured: null };
+    return {
+      carrier: "",
+      insured: null,
+      valid: false
+    };
   }
 
   function toggleCarrierField() {
@@ -831,7 +896,6 @@ document.addEventListener("DOMContentLoaded", function () {
       carrierWrap.style.display = "";
       carrierField.disabled = false;
       carrierField.required = true;
-      carrierField.placeholder = "Current insurance carrier";
     } else {
       carrierWrap.style.display = "none";
       carrierField.disabled = true;
@@ -902,11 +966,14 @@ document.addEventListener("DOMContentLoaded", function () {
     };
 
     if (insuredValue === "true") {
-      if (!carrierResult.carrier) {
-        setMessage("Please enter your current insurance carrier.", "#b91c1c");
+      if (!carrierResult.valid) {
+        setMessage("Please enter a valid supported carrier.", "#b91c1c");
         return;
       }
-      payload.insurance_carrier = carrierResult.carrier;
+
+      if (carrierResult.carrier) {
+        payload.insurance_carrier = carrierResult.carrier;
+      }
     }
 
     setMessage("Submitting...", "#475569");
