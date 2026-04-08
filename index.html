@@ -473,35 +473,12 @@
   <link rel="preconnect" href="https://www.google.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-  <script>
-    (function (w,d,s,o,f,js,fjs) {
-      w[o] = w[o] || function () { (w[o].q = w[o].q || []).push(arguments) };
-      js = d.createElement(s), fjs = d.getElementsByTagName(s)[0];
-      js.id = o;
-      js.src = f;
-      js.async = 1;
-      fjs.parentNode.insertBefore(js, fjs);
-    }(window, document, 'script', 'mcc', 'https://marketcall.com/js/mc-calltracking.js'));
-
-    mcc('init', { site: 2973, serviceBaseUrl: '//www.marketcall.com' });
-
-    (function () {
-      var params = new URLSearchParams(window.location.search);
-      var subid = params.get('subid') || params.get('clickid') || params.get('cid') || 'direct';
-      mcc('requestTrackingNumber', {
-        campaign: '340938',
-        mask: '(xxx) xxx-xxxx',
-        subid: subid
-      });
-    }());
-  </script>
-
 </head>
 <body>
   <div class="topbar">
     <div class="container">
       <div>Compare auto insurance options with confidence</div>
-      <div>Need help now? <a href="tel:+18553213393" data-mc-number="1"><strong>Call (855) 321-3393</strong></a></div>
+      <div>Fast quote request form • Simple name and email submission</div>
     </div>
   </div>
 
@@ -518,7 +495,7 @@
         <a href="#benefits">Benefits</a>
         <a href="#why-us">Why choose us</a>
         <a href="#faq">FAQ</a>
-        <a href="https://afflat3c2.com/trk/lnk/2FF6C979-CA31-45BB-BAD4-E81C72472FF7/?o=22134&c=918271&a=792052&k=033548AEA1D28DCEA883151DC8C6AF93&l=22980&s1=firstcampaign&s1={clickid}" class="cta-btn">Get My Quote</a>
+        <a href="https://afflat3c2.com/trk/lnk/2FF6C979-CA31-45BB-BAD4-E81C72472FF7/?o=22134&c=918271&a=792052&k=033548AEA1D28DCEA883151DC8C6AF93&l=22980#quote" class="cta-btn">Get My Quote</a>
       </div>
     </div>
   </nav>
@@ -531,11 +508,11 @@
           <h1>Compare Auto Insurance Quotes Online – Fast & Easy</h1>
           <p>
             Estrella Car Insurance helps drivers explore coverage options and connect with insurance partners based on their needs.
-            Start online in minutes or call to speak with a licensed insurance partner.
+            Start online in minutes with a quick request form.
           </p>
           <div class="hero-actions">
-            <a class="cta-btn" href="https://afflat3c2.com/trk/lnk/2FF6C979-CA31-45BB-BAD4-E81C72472FF7/?o=22134&c=918271&a=792052&k=033548AEA1D28DCEA883151DC8C6AF93&l=22980&s1=firstcampaign&s1={clickid}">Start Free Quote</a>
-            <a class="secondary-btn" href="tel:+18553213393" data-mc-number="1">Call Now</a>
+            <a class="cta-btn" href="https://afflat3c2.com/trk/lnk/2FF6C979-CA31-45BB-BAD4-E81C72472FF7/?o=22134&c=918271&a=792052&k=033548AEA1D28DCEA883151DC8C6AF93&l=22980#quote">Start Free Quote</a>
+            <a class="secondary-btn" href="tel:+18553213393">Call Now</a>
           </div>
           <div class="quick-points">
             <div class="point">
@@ -547,8 +524,8 @@
               <span>Explore plans that fit your vehicle, budget, and coverage goals.</span>
             </div>
             <div class="point">
-              <strong>Support when needed</strong>
-              <span>Get help by phone if you prefer to speak with someone directly.</span>
+              <strong>Quick request</strong>
+              <span>Submit your basic details and continue to quote options.</span>
             </div>
           </div>
         </div>
@@ -556,128 +533,47 @@
         <aside class="hero-form" id="quote">
           <div class="form-shell">
             <h2>Get Your Free Quote</h2>
-            <p>Fill out the secure form below to compare auto insurance options available in your area.</p>
+            <p>Enter your first name, last name, and email to continue to quote options.</p>
            
            <div id="lead-form">
   <form id="quoteForm" class="lead-form-box">
     <div style="display:grid;gap:12px;">
-      
-      <input
-  type="tel"
-  name="caller_id"
-  id="caller_id"
-  placeholder="Phone Number (example: +18005550199)"
-  inputmode="tel"
-  autocomplete="tel"
-  required
-  style="width:100%;padding:14px 16px;border:1px solid #cbd5e1;border-radius:12px;font-size:15px;background:#fff;"
-/>
-      
       <input
         type="text"
-        name="zip_code"
-        placeholder="ZIP Code"
-        inputmode="numeric"
-        maxlength="5"
+        name="first_name"
+        id="first_name"
+        placeholder="First Name"
+        autocomplete="given-name"
         required
         style="width:100%;padding:14px 16px;border:1px solid #cbd5e1;border-radius:12px;font-size:15px;background:#fff;"
       />
 
-      <select
-  name="is_currently_insured"
-  required
-  style="width:100%;padding:14px 16px;border:1px solid #cbd5e1;border-radius:12px;font-size:15px;background:#fff;"
->
-  <option value="">Currently insured?</option>
-  <option value="true">Yes</option>
-  <option value="false">No</option>
-</select>
-
-<select
-  name="own_home"
-  required
-  style="width:100%;padding:14px 16px;border:1px solid #cbd5e1;border-radius:12px;font-size:15px;background:#fff;"
->
-  <option value="">Own home?</option>
-  <option value="true">Yes</option>
-  <option value="false">No</option>
-</select>
-
-      <div id="carrierWrap">
-  <input
-    type="text"
-    name="insurance_carrier"
-    id="insurance_carrier"
-    placeholder="Current carrier (example: GEICO, Progressive, AAA Insurance)"
-    autocomplete="off"
-    style="width:100%;padding:14px 16px;border:1px solid #cbd5e1;border-radius:12px;font-size:15px;background:#fff;"
-  />
-</div>
-
-      <select
-        name="state"
+      <input
+        type="text"
+        name="last_name"
+        id="last_name"
+        placeholder="Last Name"
+        autocomplete="family-name"
         required
         style="width:100%;padding:14px 16px;border:1px solid #cbd5e1;border-radius:12px;font-size:15px;background:#fff;"
-      >
-        <option value="">Select state</option>
-        <option value="AL">AL</option>
-        <option value="AK">AK</option>
-        <option value="AZ">AZ</option>
-        <option value="AR">AR</option>
-        <option value="CA">CA</option>
-        <option value="CO">CO</option>
-        <option value="CT">CT</option>
-        <option value="DE">DE</option>
-        <option value="FL">FL</option>
-        <option value="GA">GA</option>
-        <option value="HI">HI</option>
-        <option value="ID">ID</option>
-        <option value="IL">IL</option>
-        <option value="IN">IN</option>
-        <option value="IA">IA</option>
-        <option value="KS">KS</option>
-        <option value="KY">KY</option>
-        <option value="LA">LA</option>
-        <option value="ME">ME</option>
-        <option value="MD">MD</option>
-        <option value="MA">MA</option>
-        <option value="MI">MI</option>
-        <option value="MN">MN</option>
-        <option value="MS">MS</option>
-        <option value="MO">MO</option>
-        <option value="MT">MT</option>
-        <option value="NE">NE</option>
-        <option value="NV">NV</option>
-        <option value="NH">NH</option>
-        <option value="NJ">NJ</option>
-        <option value="NM">NM</option>
-        <option value="NY">NY</option>
-        <option value="NC">NC</option>
-        <option value="ND">ND</option>
-        <option value="OH">OH</option>
-        <option value="OK">OK</option>
-        <option value="OR">OR</option>
-        <option value="PA">PA</option>
-        <option value="RI">RI</option>
-        <option value="SC">SC</option>
-        <option value="SD">SD</option>
-        <option value="TN">TN</option>
-        <option value="TX">TX</option>
-        <option value="UT">UT</option>
-        <option value="VT">VT</option>
-        <option value="VA">VA</option>
-        <option value="WA">WA</option>
-        <option value="WV">WV</option>
-        <option value="WI">WI</option>
-        <option value="WY">WY</option>
-      </select>
+      />
+
+      <input
+        type="email"
+        name="email"
+        id="email"
+        placeholder="Email Address"
+        autocomplete="email"
+        required
+        style="width:100%;padding:14px 16px;border:1px solid #cbd5e1;border-radius:12px;font-size:15px;background:#fff;"
+      />
 
       <button
         type="submit"
         class="cta-btn"
         style="border:none;cursor:pointer;width:100%;"
       >
-        Get My Quote
+        Continue To Quote Options
       </button>
 
       <p id="formMessage" style="margin:4px 0 0;color:#475569;font-size:14px;"></p>
@@ -687,10 +583,10 @@
 
             <div class="call-card">
               <div>
-                <strong>Prefer to speak with an agent?</strong><br />
-                <span style="color:#475569;">Call now to get connected with a licensed insurance partner.</span>
+                <strong>Quick online request</strong><br />
+                <span style="color:#475569;">Enter your name and email, then continue to available quote options.</span>
               </div>
-              <a class="call-btn" href="tel:+18553213393" data-mc-number="1">Call Now</a>
+              <a class="call-btn" href="#quote">Start Here</a>
             </div>
           </div>
         </aside>
@@ -704,7 +600,7 @@
       Looking for affordable auto insurance? Estrella Car Insurance helps drivers across the United States compare car insurance quotes quickly and easily. Whether you need liability coverage, full coverage, or protection for a new vehicle, you can explore options tailored to your needs.
     </p>
     <p class="section-copy">
-      Our platform connects you with licensed insurance partners who may offer competitive rates based on your driving history, location, and vehicle type. Start your quote online or call now to speak with a representative.
+      Our platform connects you with licensed insurance partners who may offer competitive rates based on your driving history, location, and vehicle type. Start your request online and continue to quote options in just a few clicks.
     </p>
   </div>
 </section>
@@ -727,7 +623,7 @@
           </div>
           <div class="card">
             <h3>Built for convenience</h3>
-            <p>Use the online form anytime or call if you would rather speak with someone right away.</p>
+            <p>Use the online form anytime and continue to the next step right away.</p>
           </div>
         </div>
       </div>
@@ -751,7 +647,7 @@
           </details>
           <details>
             <summary>Can I get help by phone?</summary>
-            <p>Yes. You can use the call button at any time to speak with a licensed insurance partner.</p>
+            <p>You can submit the short form and continue to the next step to view quote options.</p>
           </details>
         </div>
       </div>
@@ -787,7 +683,7 @@
   <div class="sticky-mobile">
     <div class="actions">
       <a class="cta-btn" href="#quote">Get Quote</a>
-      <a class="call-btn" href="tel:+18553213393" data-mc-number="1">Call Now</a>
+      <a class="call-btn" href="#quote">Start Here</a>
     </div>
   </div>  
 
@@ -796,14 +692,10 @@
 document.addEventListener("DOMContentLoaded", function () {
   const form = document.getElementById("quoteForm");
   const message = document.getElementById("formMessage");
-  const insuredField = document.querySelector('[name="is_currently_insured"]');
-  const carrierField = document.getElementById("insurance_carrier");
-  const carrierWrap = document.getElementById("carrierWrap");
-  const zipField = document.querySelector('[name="zip_code"]');
-  const callerIdField = document.getElementById("caller_id");
+  const offerBaseUrl = "https://afflat3c2.com/trk/lnk/2FF6C979-CA31-45BB-BAD4-E81C72472FF7/?o=22134&c=918271&a=792052&k=033548AEA1D28DCEA883151DC8C6AF93&l=22980";
 
-  if (!form || !message || !insuredField || !carrierField || !carrierWrap || !callerIdField) {
-    console.log("Quote form elements not found.");
+  if (!form || !message) {
+    console.log("MaxBounty form elements not found.");
     return;
   }
 
@@ -812,288 +704,54 @@ document.addEventListener("DOMContentLoaded", function () {
     message.style.color = color || "#475569";
   }
 
-  function sanitizeZip(zip) {
-    return (zip || "").replace(/\D/g, "").slice(0, 5);
+  function cleanName(value) {
+    return (value || "").trim().replace(/\s+/g, " ");
   }
 
-  function formatCallerId(input) {
-    const raw = (input || "").trim();
-    const digits = raw.replace(/\D/g, "");
-
-    if (raw.startsWith("+") && digits.length >= 11) {
-      return "+" + digits;
-    }
-
-    if (digits.length === 10) {
-      return "+1" + digits;
-    }
-
-    if (digits.length === 11 && digits.startsWith("1")) {
-      return "+" + digits;
-    }
-
-    return raw;
+  function isValidEmail(value) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test((value || "").trim());
   }
 
-  function isValidCallerId(value) {
-    return /^\+\d{11,15}$/.test(value);
+  function buildOfferUrl(firstName, lastName, email) {
+    const clickId = "lead_" + Date.now();
+    const prepopString = `firstName=${firstName}&lastName=${lastName}&email=${email}`;
+    const encodedPrepop = encodeURIComponent(prepopString);
+
+    return offerBaseUrl +
+      "&s1=" + encodeURIComponent(clickId) +
+      "&x=" + encodedPrepop;
   }
 
-  function normalizeCarrier(input) {
-    const value = (input || "").trim().toLowerCase();
-
-    const noInsuranceValues = [
-      "no",
-      "none",
-      "no insurance",
-      "not insured",
-      "dont have",
-      "don't have",
-      "n/a",
-      "na",
-      "no carrier",
-      "never had",
-      "never had insurance"
-    ];
-
-    if (noInsuranceValues.includes(value)) {
-      return { carrier: "", insured: false, valid: true };
-    }
-
-    const approvedCarrierMap = {
-      "21st century": "21st Century",
-      "21stcentury": "21st Century",
-
-      "aaa": "AAA Insurance",
-      "aaa insurance": "AAA Insurance",
-
-      "allstate": "Allstate",
-
-      "commerce": "Commerce Insurance Co",
-      "commerce insurance": "Commerce Insurance Co",
-      "commerce insurance co": "Commerce Insurance Co",
-
-      "esurance": "Esurance",
-
-      "farmers": "Farmers Insurance",
-      "farmers insurance": "Farmers Insurance",
-
-      "geico": "GEICO",
-
-      "gmac": "GMACNatGenIns",
-      "gmacnatgenins": "GMACNatGenIns",
-
-      "liberty mutual": "Liberty Mutual",
-      "libertymutual": "Liberty Mutual",
-
-      "metlife": "Met Life Insurance",
-      "met life": "Met Life Insurance",
-      "met life insurance": "Met Life Insurance",
-
-      "n": "N",
-
-      "nationwide": "Nationwide",
-
-      "other": "Other",
-
-      "progressive": "Progressive",
-
-      "safeco": "SAFECO",
-
-      "state farm": "State Farm",
-      "statefarm": "State Farm",
-
-      "the hartford": "The Hartford",
-      "hartford": "The Hartford",
-
-      "travelers": "Travelers Insurance",
-      "travelers insurance": "Travelers Insurance",
-
-      "usaa": "USAA",
-
-      "plymouth rock": "Plymouth Rock",
-      "plymouthrock": "Plymouth Rock",
-
-      "mercury": "Mercury Insurance",
-      "mercury insurance": "Mercury Insurance",
-
-      "safeauto": "SafeAuto",
-      "safe auto": "SafeAuto",
-
-      "ais": "AIS",
-
-      "answer": "AnswerFinancial",
-      "answerfinancial": "AnswerFinancial",
-      "answer financial": "AnswerFinancial",
-
-      "clearlink": "ClearLink",
-      "clear link": "ClearLink",
-
-      "csaa": "CSAA",
-
-      "national general": "National General",
-
-      "foremost": "Foremost"
-    };
-
-    if (approvedCarrierMap[value]) {
-      return {
-        carrier: approvedCarrierMap[value],
-        insured: true,
-        valid: true
-      };
-    }
-
-    return {
-      carrier: "",
-      insured: null,
-      valid: false
-    };
-  }
-
-  function toggleCarrierField() {
-    const insuredValue = insuredField.value;
-
-    if (insuredValue === "true") {
-      carrierWrap.style.display = "";
-      carrierField.disabled = false;
-      carrierField.required = true;
-    } else {
-      carrierWrap.style.display = "none";
-      carrierField.disabled = true;
-      carrierField.required = false;
-      carrierField.value = "";
-    }
-  }
-
-  insuredField.addEventListener("change", toggleCarrierField);
-
-  carrierField.addEventListener("input", function () {
-    const result = normalizeCarrier(carrierField.value);
-
-    if (result.insured === false) {
-      insuredField.value = "false";
-      toggleCarrierField();
-      setMessage("", "#475569");
-    }
-  });
-
-  zipField.addEventListener("input", function () {
-    zipField.value = sanitizeZip(zipField.value);
-  });
-
-  callerIdField.addEventListener("blur", function () {
-    callerIdField.value = formatCallerId(callerIdField.value);
-  });
-
-  toggleCarrierField();
-
-  form.addEventListener("submit", async function (e) {
+  form.addEventListener("submit", function (e) {
     e.preventDefault();
 
     const formData = new FormData(form);
-    const carrierResult = normalizeCarrier(formData.get("insurance_carrier"));
-    let insuredValue = formData.get("is_currently_insured");
-    const callerId = formatCallerId(formData.get("caller_id"));
+    const firstName = cleanName(formData.get("first_name"));
+    const lastName = cleanName(formData.get("last_name"));
+    const email = (formData.get("email") || "").trim();
 
-    if (!callerId || !isValidCallerId(callerId)) {
-      setMessage("Please enter a valid phone number like +18005550199.", "#b91c1c");
+    if (!firstName) {
+      setMessage("Please enter your first name.", "#b91c1c");
       return;
     }
 
-    if (!insuredValue) {
-      setMessage("Please select whether you are currently insured.", "#b91c1c");
+    if (!lastName) {
+      setMessage("Please enter your last name.", "#b91c1c");
       return;
     }
 
-    if (!formData.get("own_home")) {
-      setMessage("Please select whether you own a home.", "#b91c1c");
+    if (!isValidEmail(email)) {
+      setMessage("Please enter a valid email address.", "#b91c1c");
       return;
     }
 
-    const zipCode = sanitizeZip(formData.get("zip_code"));
-    if (!zipCode || zipCode.length !== 5) {
-      setMessage("Please enter a valid 5-digit ZIP code.", "#b91c1c");
-      return;
-    }
+    setMessage("Redirecting you to quote options...", "#166534");
 
-    const stateValue = (formData.get("state") || "").trim();
-    if (!stateValue) {
-      setMessage("Please select a state.", "#b91c1c");
-      return;
-    }
+    const offerUrl = buildOfferUrl(firstName, lastName, email);
 
-    if (carrierResult.insured === false) {
-      insuredValue = "false";
-    }
-
-    const payload = {
-      caller_id: callerId,
-      zip_code: zipCode,
-      is_currently_insured: insuredValue === "true",
-      own_home: formData.get("own_home") === "true",
-      state: stateValue,
-      landing_page: window.location.href,
-      pub_id: "default_pub_id",
-      media_type: "web"
-    };
-
-    if (insuredValue === "true") {
-      if (!carrierResult.valid) {
-        setMessage("Please enter a valid supported carrier.", "#b91c1c");
-        return;
-      }
-
-      if (carrierResult.carrier) {
-        payload.insurance_carrier = carrierResult.carrier;
-      }
-    }
-
-    setMessage("Submitting...", "#475569");
-
-    try {
-      const response = await fetch("/api/marketcall", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(payload)
-      });
-
-      const raw = await response.text();
-      console.log("Worker raw response:", raw);
-
-      let result;
-      try {
-        result = JSON.parse(raw);
-      } catch {
-        result = { raw: raw };
-      }
-
-      if (response.ok && result.ok !== false) {
-      window.location.href = "https://afflat3c2.com/trk/lnk/2FF6C979-CA31-45BB-BAD4-E81C72472FF7/?o=22134&c=918271&a=792052&k=033548AEA1D28DCEA883151DC8C6AF93&l=22980&s1=lead_" + Date.now();
-        setMessage("Success! Your request was submitted.", "#166534");
-        form.reset();
-        toggleCarrierField();
-      } else {
-        let errorText = "Submission failed.";
-
-        if (result.response) {
-          errorText = result.response;
-        } else if (result.error) {
-          errorText = typeof result.error === "string"
-            ? result.error
-            : JSON.stringify(result.error);
-        } else if (result.raw) {
-          errorText = result.raw;
-        }
-
-        setMessage("Error: " + errorText, "#b91c1c");
-      }
-    } catch (error) {
-      console.error("Network error:", error);
-      setMessage("Network error: " + error.message, "#b91c1c");
-    }
+    setTimeout(function () {
+      window.location.href = offerUrl;
+    }, 500);
   });
 });
 </script>
