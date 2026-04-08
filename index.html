@@ -566,12 +566,16 @@
   <option value="false">No</option>
 </select>
 
-      <input
-        type="text"
-        name="insurance_carrier"
-        placeholder="Current insurance carrier"
-        style="width:100%;padding:14px 16px;border:1px solid #cbd5e1;border-radius:12px;font-size:15px;background:#fff;"
-      />
+      <div id="carrierWrap">
+  <input
+    type="text"
+    name="insurance_carrier"
+    id="insurance_carrier"
+    placeholder="Current insurance carrier"
+    autocomplete="off"
+    style="width:100%;padding:14px 16px;border:1px solid #cbd5e1;border-radius:12px;font-size:15px;background:#fff;"
+  />
+</div>
 
       <select
         name="state"
@@ -754,8 +758,14 @@
 document.addEventListener("DOMContentLoaded", function () {
   const form = document.getElementById("quoteForm");
   const message = document.getElementById("formMessage");
+  const insuredField = document.querySelector('[name="is_currently_insured"]');
+  const ownHomeField = document.querySelector('[name="own_home"]');
+  const carrierField = document.getElementById("insurance_carrier");
+  const carrierWrap = document.getElementById("carrierWrap");
+  const stateField = document.querySelector('[name="state"]');
+  const zipField = document.querySelector('[name="zip_code"]');
 
-  if (!form || !message) {
+  if (!form || !message || !insuredField || !carrierField || !carrierWrap) {
     console.log("Quote form elements not found.");
     return;
   }
@@ -771,6 +781,24 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function normalizeCarrier(input) {
     const value = (input || "").trim().toLowerCase();
+
+    const noInsuranceValues = [
+      "no",
+      "none",
+      "no insurance",
+      "not insured",
+      "dont have",
+      "don't have",
+      "n/a",
+      "na",
+      "no carrier",
+      "never had",
+      "never had insurance"
+    ];
+
+    if (noInsuranceValues.includes(value)) {
+      return { carrier: "", insured: false };
+    }
 
     const carrierMap = {
       "geico": "GEICO",
@@ -789,33 +817,96 @@ document.addEventListener("DOMContentLoaded", function () {
       "aaa": "AAA"
     };
 
-    return carrierMap[value] || input.trim();
+    if (carrierMap[value]) {
+      return { carrier: carrierMap[value], insured: true };
+    }
+
+    return { carrier: (input || "").trim(), insured: null };
   }
+
+  function toggleCarrierField() {
+    const insuredValue = insuredField.value;
+
+    if (insuredValue === "true") {
+      carrierWrap.style.display = "";
+      carrierField.disabled = false;
+      carrierField.required = true;
+      carrierField.placeholder = "Current insurance carrier";
+    } else {
+      carrierWrap.style.display = "none";
+      carrierField.disabled = true;
+      carrierField.required = false;
+      carrierField.value = "";
+    }
+  }
+
+  insuredField.addEventListener("change", toggleCarrierField);
+
+  carrierField.addEventListener("input", function () {
+    const result = normalizeCarrier(carrierField.value);
+
+    if (result.insured === false) {
+      insuredField.value = "false";
+      toggleCarrierField();
+      setMessage("", "#475569");
+    }
+  });
+
+  zipField.addEventListener("input", function () {
+    zipField.value = sanitizeZip(zipField.value);
+  });
+
+  toggleCarrierField();
 
   form.addEventListener("submit", async function (e) {
     e.preventDefault();
 
     const formData = new FormData(form);
+    const carrierResult = normalizeCarrier(formData.get("insurance_carrier"));
+    let insuredValue = formData.get("is_currently_insured");
+
+    if (!insuredValue) {
+      setMessage("Please select whether you are currently insured.", "#b91c1c");
+      return;
+    }
+
+    if (!formData.get("own_home")) {
+      setMessage("Please select whether you own a home.", "#b91c1c");
+      return;
+    }
+
+    const zipCode = sanitizeZip(formData.get("zip_code"));
+    if (!zipCode || zipCode.length !== 5) {
+      setMessage("Please enter a valid 5-digit ZIP code.", "#b91c1c");
+      return;
+    }
+
+    const stateValue = (formData.get("state") || "").trim();
+    if (!stateValue) {
+      setMessage("Please select a state.", "#b91c1c");
+      return;
+    }
+
+    if (carrierResult.insured === false) {
+      insuredValue = "false";
+    }
 
     const payload = {
-      zip_code: sanitizeZip(formData.get("zip_code")),
-      is_currently_insured: formData.get("is_currently_insured") === "true",
+      zip_code: zipCode,
+      is_currently_insured: insuredValue === "true",
       own_home: formData.get("own_home") === "true",
-      insurance_carrier: normalizeCarrier(formData.get("insurance_carrier")),
-      state: (formData.get("state") || "").trim(),
+      state: stateValue,
       landing_page: window.location.href,
       pub_id: "default_pub_id",
       media_type: "web"
     };
 
-    if (!payload.zip_code || payload.zip_code.length !== 5) {
-      setMessage("Please enter a valid 5-digit ZIP code.", "#b91c1c");
-      return;
-    }
-
-    if (!formData.get("is_currently_insured") || !formData.get("own_home") || !payload.state) {
-      setMessage("Please complete all required fields.", "#b91c1c");
-      return;
+    if (insuredValue === "true") {
+      if (!carrierResult.carrier) {
+        setMessage("Please enter your current insurance carrier.", "#b91c1c");
+        return;
+      }
+      payload.insurance_carrier = carrierResult.carrier;
     }
 
     setMessage("Submitting...", "#475569");
@@ -842,6 +933,7 @@ document.addEventListener("DOMContentLoaded", function () {
       if (response.ok && result.ok !== false) {
         setMessage("Success! Your request was submitted.", "#166534");
         form.reset();
+        toggleCarrierField();
       } else {
         let errorText = "Submission failed.";
 
