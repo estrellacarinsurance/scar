@@ -750,7 +750,7 @@
     </div>
   </div>
 
- <script>
+  <script>
 document.addEventListener("DOMContentLoaded", function () {
   const form = document.getElementById("quoteForm");
   const message = document.getElementById("formMessage");
@@ -769,19 +769,39 @@ document.addEventListener("DOMContentLoaded", function () {
     return (zip || "").replace(/\D/g, "").slice(0, 5);
   }
 
+  function normalizeCarrier(input) {
+    const value = (input || "").trim().toLowerCase();
+
+    const carrierMap = {
+      "geico": "GEICO",
+      "progressive": "Progressive",
+      "state farm": "State Farm",
+      "statefarm": "State Farm",
+      "allstate": "Allstate",
+      "liberty mutual": "Liberty Mutual",
+      "libertymutual": "Liberty Mutual",
+      "farmers": "Farmers",
+      "nationwide": "Nationwide",
+      "travelers": "Travelers",
+      "american family": "American Family",
+      "americanfamily": "American Family",
+      "usaa": "USAA",
+      "aaa": "AAA"
+    };
+
+    return carrierMap[value] || input.trim();
+  }
+
   form.addEventListener("submit", async function (e) {
     e.preventDefault();
 
     const formData = new FormData(form);
 
-    const insuredValue = formData.get("is_currently_insured");
-    const ownHomeValue = formData.get("own_home");
-
     const payload = {
       zip_code: sanitizeZip(formData.get("zip_code")),
-      is_currently_insured: insuredValue === "true",
-      own_home: ownHomeValue === "true",
-      insurance_carrier: (formData.get("insurance_carrier") || "").trim(),
+      is_currently_insured: formData.get("is_currently_insured") === "true",
+      own_home: formData.get("own_home") === "true",
+      insurance_carrier: normalizeCarrier(formData.get("insurance_carrier")),
       state: (formData.get("state") || "").trim(),
       landing_page: window.location.href,
       pub_id: "default_pub_id",
@@ -793,7 +813,7 @@ document.addEventListener("DOMContentLoaded", function () {
       return;
     }
 
-    if (insuredValue === "" || ownHomeValue === "" || !payload.state) {
+    if (!formData.get("is_currently_insured") || !formData.get("own_home") || !payload.state) {
       setMessage("Please complete all required fields.", "#b91c1c");
       return;
     }
