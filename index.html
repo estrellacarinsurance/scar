@@ -544,11 +544,11 @@ document.getElementById("quoteForm").addEventListener("submit", async function (
 
   const payload = {
     caller_id: "",
-    zip_code: formData.get("zip_code"),
-    is_currently_insured: formData.get("is_currently_insured"),
-    own_home: formData.get("own_home"),
-    insurance_carrier: formData.get("insurance_carrier"),
-    state: formData.get("state"),
+    zip_code: formData.get("zip_code")?.trim() || "",
+    is_currently_insured: formData.get("is_currently_insured") || "",
+    own_home: formData.get("own_home") || "",
+    insurance_carrier: formData.get("insurance_carrier")?.trim() || "",
+    state: formData.get("state")?.trim() || "",
     landing_page: window.location.href,
     pub_id: "default_pub_id",
     media_type: "web"
@@ -565,15 +565,21 @@ document.getElementById("quoteForm").addEventListener("submit", async function (
       body: JSON.stringify(payload)
     });
 
-    const result = await response.json();
-    console.log("Worker result:", result);
+    const raw = await response.text();
+    console.log("RAW RESPONSE:", raw);
 
-    if (response.ok && result.ok) {
+    let result;
+    try {
+      result = JSON.parse(raw);
+    } catch {
+      result = { raw };
+    }
+
+    if (response.ok && result.ok !== false) {
       message.textContent = "Success! Your request was submitted.";
       form.reset();
     } else {
-      message.textContent =
-        "Error: " + (result.response || result.error || "Unknown error");
+      message.textContent = "Error: " + (result.response || result.error || result.raw || "Unknown error");
     }
   } catch (error) {
     console.error(error);
