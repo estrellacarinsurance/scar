@@ -532,63 +532,62 @@
           <div class="form-shell">
             <h2>Get Your Free Quote</h2>
             <p>Fill out the secure form below to compare auto insurance options available in your area.</p>
-            <div id="lead-form" class="">
-            
-            <script>
-document.getElementById("quoteForm").addEventListener("submit", async function (e) {
-  e.preventDefault();
+           
+           <div id="lead-form">
+  <form id="quoteForm" class="lead-form-box">
+    <input
+      type="text"
+      name="zip_code"
+      placeholder="ZIP Code"
+      required
+      style="width:100%;padding:14px;margin-bottom:12px;border:1px solid #cbd5e1;border-radius:12px;"
+    />
 
-  const form = e.target;
-  const message = document.getElementById("formMessage");
-  const formData = new FormData(form);
+    <select
+      name="is_currently_insured"
+      required
+      style="width:100%;padding:14px;margin-bottom:12px;border:1px solid #cbd5e1;border-radius:12px;"
+    >
+      <option value="">Currently insured?</option>
+      <option value="Yes">Yes</option>
+      <option value="No">No</option>
+    </select>
 
-  const payload = {
-    caller_id: "",
-    zip_code: formData.get("zip_code")?.trim() || "",
-    is_currently_insured: formData.get("is_currently_insured") || "",
-    own_home: formData.get("own_home") || "",
-    insurance_carrier: formData.get("insurance_carrier")?.trim() || "",
-    state: formData.get("state")?.trim() || "",
-    landing_page: window.location.href,
-    pub_id: "default_pub_id",
-    media_type: "web"
-  };
+    <select
+      name="own_home"
+      required
+      style="width:100%;padding:14px;margin-bottom:12px;border:1px solid #cbd5e1;border-radius:12px;"
+    >
+      <option value="">Own home?</option>
+      <option value="Yes">Yes</option>
+      <option value="No">No</option>
+    </select>
 
-  message.textContent = "Submitting...";
+    <input
+      type="text"
+      name="insurance_carrier"
+      placeholder="Current insurance carrier"
+      style="width:100%;padding:14px;margin-bottom:12px;border:1px solid #cbd5e1;border-radius:12px;"
+    />
 
-  try {
-    const response = await fetch("/api/marketcall", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(payload)
-    });
+    <input
+      type="text"
+      name="state"
+      placeholder="State (example: FL)"
+      style="width:100%;padding:14px;margin-bottom:12px;border:1px solid #cbd5e1;border-radius:12px;"
+    />
 
-    const raw = await response.text();
-    console.log("RAW RESPONSE:", raw);
+    <button
+      type="submit"
+      class="cta-btn"
+      style="border:none;cursor:pointer;width:100%;"
+    >
+      Get My Quote
+    </button>
 
-    let result;
-    try {
-      result = JSON.parse(raw);
-    } catch {
-      result = { raw };
-    }
-
-    if (response.ok && result.ok !== false) {
-      message.textContent = "Success! Your request was submitted.";
-      form.reset();
-    } else {
-      message.textContent = "Error: " + (result.response || result.error || result.raw || "Unknown error");
-    }
-  } catch (error) {
-    console.error(error);
-    message.textContent = "Network error: " + error.message;
-  }
-});
-</script>
-  
-  </div>
+    <p id="formMessage" style="margin-top:12px;color:#475569;font-size:14px;"></p>
+  </form>
+</div>
 
             <div class="call-card">
               <div>
@@ -695,5 +694,68 @@ document.getElementById("quoteForm").addEventListener("submit", async function (
       <a class="call-btn" href="tel:+18884036915">Call Now</a>
     </div>
   </div>
+
+  <script>
+document.addEventListener("DOMContentLoaded", function () {
+  const form = document.getElementById("quoteForm");
+  const message = document.getElementById("formMessage");
+
+  if (!form) {
+    console.log("quoteForm not found");
+    return;
+  }
+
+  form.addEventListener("submit", async function (e) {
+    e.preventDefault();
+
+    const formData = new FormData(form);
+
+    const payload = {
+      caller_id: "",
+      zip_code: formData.get("zip_code")?.trim() || "",
+      is_currently_insured: formData.get("is_currently_insured") || "",
+      own_home: formData.get("own_home") || "",
+      insurance_carrier: formData.get("insurance_carrier")?.trim() || "",
+      state: formData.get("state")?.trim() || "",
+      landing_page: window.location.href,
+      pub_id: "default_pub_id",
+      media_type: "web"
+    };
+
+    message.textContent = "Submitting...";
+
+    try {
+      const response = await fetch("/api/marketcall", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)
+      });
+
+      const raw = await response.text();
+      console.log("RAW RESPONSE:", raw);
+
+      let result;
+      try {
+        result = JSON.parse(raw);
+      } catch {
+        result = { raw };
+      }
+
+      if (response.ok && result.ok !== false) {
+        message.textContent = "Success! Your request was submitted.";
+        form.reset();
+      } else {
+        message.textContent = "Error: " + (result.response || result.error || result.raw || "Unknown error");
+      }
+    } catch (error) {
+      console.error(error);
+      message.textContent = "Network error: " + error.message;
+    }
+  });
+});
+</script>
+
 </body>
 </html>
