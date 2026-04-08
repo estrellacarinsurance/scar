@@ -13,14 +13,6 @@
 }
 </script>
 
-<script>
-(function (w,d,s,o,f,js,fjs) { w[o] = w[o] || function () { (w[o].q = w[o].q || []).push(arguments) }; js = d.createElement(s), fjs = d.getElementsByTagName(s)[0]; js.id = o; js.src = f; js.async = 1; fjs.parentNode.insertBefore(js, fjs);}(window, document, 'script', 'mcc', 'https://marketcall.com/js/mc-calltracking.js'));
-mcc('init', { site: 2973, serviceBaseUrl: '//www.marketcall.com' });
-<!-- Request Tracking Number Code -->
-<!-- The code should be located on all pages where the number from the call tracking should be substituted -->
-mcc('requestTrackingNumber', {campaign:"340938",mask:"(xxx) xxx-xx-xx",subid:"{subid}"});
-</script>
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -480,12 +472,36 @@ mcc('requestTrackingNumber', {campaign:"340938",mask:"(xxx) xxx-xx-xx",subid:"{s
   </style>
   <link rel="preconnect" href="https://www.google.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <script>
+    (function (w,d,s,o,f,js,fjs) {
+      w[o] = w[o] || function () { (w[o].q = w[o].q || []).push(arguments) };
+      js = d.createElement(s), fjs = d.getElementsByTagName(s)[0];
+      js.id = o;
+      js.src = f;
+      js.async = 1;
+      fjs.parentNode.insertBefore(js, fjs);
+    }(window, document, 'script', 'mcc', 'https://marketcall.com/js/mc-calltracking.js'));
+
+    mcc('init', { site: 2973, serviceBaseUrl: '//www.marketcall.com' });
+
+    (function () {
+      var params = new URLSearchParams(window.location.search);
+      var subid = params.get('subid') || params.get('clickid') || params.get('cid') || 'direct';
+      mcc('requestTrackingNumber', {
+        campaign: '340938',
+        mask: '(xxx) xxx-xxxx',
+        subid: subid
+      });
+    }());
+  </script>
+
 </head>
 <body>
   <div class="topbar">
     <div class="container">
       <div>Compare auto insurance options with confidence</div>
-      <div>Need help now? <a href="tel:+18553213393"><strong>Call (855) 321-3393</strong></a></div>
+      <div>Need help now? <a href="tel:+18553213393" data-mc-number="1"><strong>Call (855) 321-3393</strong></a></div>
     </div>
   </div>
 
@@ -519,7 +535,7 @@ mcc('requestTrackingNumber', {campaign:"340938",mask:"(xxx) xxx-xx-xx",subid:"{s
           </p>
           <div class="hero-actions">
             <a class="cta-btn" href="#quote">Start Free Quote</a>
-            <a class="secondary-btn" href="tel:+18553213393">Call Now</a>
+            <a class="secondary-btn" href="tel:+18553213393" data-mc-number="1">Call Now</a>
           </div>
           <div class="quick-points">
             <div class="point">
@@ -674,7 +690,7 @@ mcc('requestTrackingNumber', {campaign:"340938",mask:"(xxx) xxx-xx-xx",subid:"{s
                 <strong>Prefer to speak with an agent?</strong><br />
                 <span style="color:#475569;">Call now to get connected with a licensed insurance partner.</span>
               </div>
-              <a class="call-btn" href="tel:+18553213393">Call Now</a>
+              <a class="call-btn" href="tel:+18553213393" data-mc-number="1">Call Now</a>
             </div>
           </div>
         </aside>
@@ -771,7 +787,7 @@ mcc('requestTrackingNumber', {campaign:"340938",mask:"(xxx) xxx-xx-xx",subid:"{s
   <div class="sticky-mobile">
     <div class="actions">
       <a class="cta-btn" href="#quote">Get Quote</a>
-      <a class="call-btn" href="tel:+18553213393">Call Now</a>
+      <a class="call-btn" href="tel:+18553213393" data-mc-number="1">Call Now</a>
     </div>
   </div>  
 
