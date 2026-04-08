@@ -534,38 +534,7 @@
             <p>Fill out the secure form below to compare auto insurance options available in your area.</p>
             <div id="lead-form" class="">
             
-            <form id="quoteForm" class="lead-form-box">
-  <input type="text" name="zip_code" placeholder="ZIP Code" required
-    style="width:100%;padding:14px;margin-bottom:12px;border:1px solid #cbd5e1;border-radius:12px;" />
-
-  <select name="is_currently_insured" required
-    style="width:100%;padding:14px;margin-bottom:12px;border:1px solid #cbd5e1;border-radius:12px;">
-    <option value="">Currently insured?</option>
-    <option value="Yes">Yes</option>
-    <option value="No">No</option>
-  </select>
-
-  <select name="own_home" required
-    style="width:100%;padding:14px;margin-bottom:12px;border:1px solid #cbd5e1;border-radius:12px;">
-    <option value="">Own home?</option>
-    <option value="Yes">Yes</option>
-    <option value="No">No</option>
-  </select>
-
-  <input type="text" name="insurance_carrier" placeholder="Current insurance carrier"
-    style="width:100%;padding:14px;margin-bottom:12px;border:1px solid #cbd5e1;border-radius:12px;" />
-
-  <input type="text" name="state" placeholder="State"
-    style="width:100%;padding:14px;margin-bottom:12px;border:1px solid #cbd5e1;border-radius:12px;" />
-
-  <button type="submit" class="cta-btn" style="border:none;cursor:pointer;width:100%;">
-    Get My Quote
-  </button>
-
-  <p id="formMessage" style="margin-top:12px;color:#475569;font-size:14px;"></p>
-</form>
-
-<script>
+            <script>
 document.getElementById("quoteForm").addEventListener("submit", async function (e) {
   e.preventDefault();
 
@@ -574,7 +543,6 @@ document.getElementById("quoteForm").addEventListener("submit", async function (
   const formData = new FormData(form);
 
   const payload = {
-    campaign_id: "340938",
     caller_id: "",
     zip_code: formData.get("zip_code"),
     is_currently_insured: formData.get("is_currently_insured"),
@@ -597,19 +565,19 @@ document.getElementById("quoteForm").addEventListener("submit", async function (
       body: JSON.stringify(payload)
     });
 
-    const resultText = await response.text();
+    const result = await response.json();
+    console.log("Worker result:", result);
 
-    if (response.ok) {
+    if (response.ok && result.ok) {
       message.textContent = "Success! Your request was submitted.";
-      console.log("Marketcall response:", resultText);
       form.reset();
     } else {
-      message.textContent = "Submission failed. Please try again.";
-      console.error("Marketcall error:", resultText);
+      message.textContent =
+        "Error: " + (result.response || result.error || "Unknown error");
     }
   } catch (error) {
-    message.textContent = "Something went wrong. Please try again.";
     console.error(error);
+    message.textContent = "Network error: " + error.message;
   }
 });
 </script>
