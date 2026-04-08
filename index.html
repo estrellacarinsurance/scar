@@ -536,6 +536,18 @@
            <div id="lead-form">
   <form id="quoteForm" class="lead-form-box">
     <div style="display:grid;gap:12px;">
+      
+      <input
+  type="tel"
+  name="caller_id"
+  id="caller_id"
+  placeholder="Phone Number (example: +18005550199)"
+  inputmode="tel"
+  autocomplete="tel"
+  required
+  style="width:100%;padding:14px 16px;border:1px solid #cbd5e1;border-radius:12px;font-size:15px;background:#fff;"
+/>
+      
       <input
         type="text"
         name="zip_code"
@@ -762,8 +774,9 @@ document.addEventListener("DOMContentLoaded", function () {
   const carrierField = document.getElementById("insurance_carrier");
   const carrierWrap = document.getElementById("carrierWrap");
   const zipField = document.querySelector('[name="zip_code"]');
+  const callerIdField = document.getElementById("caller_id");
 
-  if (!form || !message || !insuredField || !carrierField || !carrierWrap) {
+  if (!form || !message || !insuredField || !carrierField || !carrierWrap || !callerIdField) {
     console.log("Quote form elements not found.");
     return;
   }
@@ -775,6 +788,29 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function sanitizeZip(zip) {
     return (zip || "").replace(/\D/g, "").slice(0, 5);
+  }
+
+  function formatCallerId(input) {
+    const raw = (input || "").trim();
+    const digits = raw.replace(/\D/g, "");
+
+    if (raw.startsWith("+") && digits.length >= 11) {
+      return "+" + digits;
+    }
+
+    if (digits.length === 10) {
+      return "+1" + digits;
+    }
+
+    if (digits.length === 11 && digits.startsWith("1")) {
+      return "+" + digits;
+    }
+
+    return raw;
+  }
+
+  function isValidCallerId(value) {
+    return /^\+\d{11,15}$/.test(value);
   }
 
   function normalizeCarrier(input) {
@@ -920,6 +956,10 @@ document.addEventListener("DOMContentLoaded", function () {
     zipField.value = sanitizeZip(zipField.value);
   });
 
+  callerIdField.addEventListener("blur", function () {
+    callerIdField.value = formatCallerId(callerIdField.value);
+  });
+
   toggleCarrierField();
 
   form.addEventListener("submit", async function (e) {
@@ -928,6 +968,12 @@ document.addEventListener("DOMContentLoaded", function () {
     const formData = new FormData(form);
     const carrierResult = normalizeCarrier(formData.get("insurance_carrier"));
     let insuredValue = formData.get("is_currently_insured");
+    const callerId = formatCallerId(formData.get("caller_id"));
+
+    if (!callerId || !isValidCallerId(callerId)) {
+      setMessage("Please enter a valid phone number like +18005550199.", "#b91c1c");
+      return;
+    }
 
     if (!insuredValue) {
       setMessage("Please select whether you are currently insured.", "#b91c1c");
@@ -956,6 +1002,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     const payload = {
+      caller_id: callerId,
       zip_code: zipCode,
       is_currently_insured: insuredValue === "true",
       own_home: formData.get("own_home") === "true",
