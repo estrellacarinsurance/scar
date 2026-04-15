@@ -28,19 +28,19 @@ export async function onRequestPost(context) {
     const session = JSON.parse(existing);
 
     const payload = {
-      campaign_id: "340938",
-      caller_id,
-      zip_code: zip_code || "",
-      is_currently_insured: String(is_currently_insured),
-      own_home: String(own_home),
-      insurance_carrier: insurance_carrier || "",
-      IP_Address: request.headers.get("CF-Connecting-IP") || "",
-      Landing_Page: session.landingPage,
-      Pub_ID: pub_id,
-      Media_Type: media_type,
-      User_Agent: request.headers.get("user-agent") || "",
-      state: state || ""
-    };
+  campaign_id: "340938",
+  caller_id,
+  zip_code,
+  is_currently_insured: is_currently_insured === true || is_currently_insured === "true",
+  own_home: own_home === true || own_home === "true",
+  insurance_carrier,
+  IP_Address: request.headers.get("CF-Connecting-IP") || "",
+  Landing_Page: session.landingPage || "https://www.estrellacarinsurance.com/",
+  Pub_ID: pub_id || sessionId,
+  Media_Type: media_type,
+  User_Agent: request.headers.get("user-agent") || "",
+  state
+};
 
     const mcResp = await fetch(
       "https://www.marketcall.com/api/v1/affiliate/offers/10702/bid-requests",
