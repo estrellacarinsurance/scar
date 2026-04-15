@@ -481,11 +481,11 @@
 </head>
 <body>
   <div class="topbar">
-    <div class="container">
-      <div>Compare auto insurance options with confidence</div>
-      <div>Fast quote request form • Simple name and email submission</div>
-    </div>
+  <div class="container">
+    <div>Compare auto insurance options with confidence</div>
+    <div>Quick qualification form • Live availability check</div>
   </div>
+</div>
 
   <nav class="nav">
     <div class="container">
@@ -509,90 +509,183 @@
     <section class="hero">
       <div class="container hero-grid">
         <div class="hero-copy">
-          <div class="eyebrow">Compare options from trusted insurance partners</div>
-          <h1>Compare Auto Insurance Quotes Online – Fast & Easy</h1>
-          <p>
-            Estrella Car Insurance helps drivers explore coverage options and connect with insurance partners based on their needs.
-            Start online in minutes with a quick request form.
-          </p>
+          <div class="eyebrow">Connect with available insurance partners</div>
+          <h1>Check Auto Insurance Availability in Minutes</h1>
+          <p>  Answer a few quick questions to see whether an insurance partner is available for your profile.
+               If an agent is available, you’ll be connected right away.</p>
           <div class="hero-actions">
-            <a class="cta-btn" href="https://afflat3c2.com/trk/lnk/2FF6C979-CA31-45BB-BAD4-E81C72472FF7/?o=22134&c=918271&a=792052&k=033548AEA1D28DCEA883151DC8C6AF93&l=22980">Start Free Quote</a>
-            <a class="secondary-btn" href="tel:+18553213393">Call Now</a>
+          <a class="cta-btn" href="#quote">Check Availability</a>
+          <a class="secondary-btn" href="#quote">See If You Qualify</a>
           </div>
+
           <div class="quick-points">
-            <div class="point">
-              <strong>Fast and simple</strong>
-              <span>Start your quote request in just a few steps.</span>
-            </div>
-            <div class="point">
-              <strong>Flexible options</strong>
-              <span>Explore plans that fit your vehicle, budget, and coverage goals.</span>
-            </div>
-            <div class="point">
-              <strong>Quick request</strong>
-              <span>Submit your basic details and continue to quote options.</span>
-            </div>
-          </div>
+  <div class="point">
+    <strong>Fast qualification</strong>
+    <span>Answer a few quick questions to check availability.</span>
+  </div>
+  <div class="point">
+    <strong>Profile-based routing</strong>
+    <span>Your answers help match you with an available insurance partner.</span>
+  </div>
+  <div class="point">
+    <strong>Live connection</strong>
+    <span>If a partner is available, you can connect right away.</span>
+  </div>
+</div>
+          
         </div>
 
         <aside class="hero-form" id="quote">
           <div class="form-shell">
-            <h2>Get Your Free Quote</h2>
-            <p>Enter your first name, last name, and email to continue to quote options.</p>
+            <h2>Check Availability</h2>
+            <p>Answer a few quick questions so we can check whether an insurance partner is currently available for your profile.</p>
            
            <div id="lead-form">
   <form id="quoteForm" class="lead-form-box">
-    <div style="display:grid;gap:12px;">
+  <div style="display:grid;gap:12px;">
+    <input
+      type="text"
+      name="first_name"
+      id="first_name"
+      placeholder="First Name"
+      autocomplete="given-name"
+      required
+      style="width:100%;padding:14px 16px;border:1px solid #cbd5e1;border-radius:12px;font-size:15px;background:#fff;"
+    />
+
+    <input
+      type="text"
+      name="last_name"
+      id="last_name"
+      placeholder="Last Name"
+      autocomplete="family-name"
+      required
+      style="width:100%;padding:14px 16px;border:1px solid #cbd5e1;border-radius:12px;font-size:15px;background:#fff;"
+    />
+
+    <input
+      type="tel"
+      name="phone"
+      id="phone"
+      placeholder="Phone Number"
+      autocomplete="tel"
+      required
+      style="width:100%;padding:14px 16px;border:1px solid #cbd5e1;border-radius:12px;font-size:15px;background:#fff;"
+    />
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
       <input
         type="text"
-        name="first_name"
-        id="first_name"
-        placeholder="First Name"
-        autocomplete="given-name"
+        name="zip_code"
+        id="zip_code"
+        placeholder="ZIP Code"
+        inputmode="numeric"
+        maxlength="5"
         required
         style="width:100%;padding:14px 16px;border:1px solid #cbd5e1;border-radius:12px;font-size:15px;background:#fff;"
       />
 
       <input
         type="text"
-        name="last_name"
-        id="last_name"
-        placeholder="Last Name"
-        autocomplete="family-name"
+        name="state"
+        id="state"
+        placeholder="State"
+        maxlength="2"
         required
-        style="width:100%;padding:14px 16px;border:1px solid #cbd5e1;border-radius:12px;font-size:15px;background:#fff;"
+        style="width:100%;padding:14px 16px;border:1px solid #cbd5e1;border-radius:12px;font-size:15px;background:#fff;text-transform:uppercase;"
       />
-
-      <input
-        type="email"
-        name="email"
-        id="email"
-        placeholder="Email Address"
-        autocomplete="email"
-        required
-        style="width:100%;padding:14px 16px;border:1px solid #cbd5e1;border-radius:12px;font-size:15px;background:#fff;"
-      />
-
-      <button
-        type="submit"
-        class="cta-btn"
-        style="border:none;cursor:pointer;width:100%;"
-      >
-        Continue To Quote Options
-      </button>
-
-      <p id="formMessage" style="margin:4px 0 0;color:#475569;font-size:14px;"></p>
     </div>
-  </form>
+
+    <select
+      name="is_currently_insured"
+      id="is_currently_insured"
+      required
+      style="width:100%;padding:14px 16px;border:1px solid #cbd5e1;border-radius:12px;font-size:15px;background:#fff;"
+    >
+      <option value="">Currently insured?</option>
+      <option value="true">Yes</option>
+      <option value="false">No</option>
+    </select>
+
+    <select
+      name="own_home"
+      id="own_home"
+      required
+      style="width:100%;padding:14px 16px;border:1px solid #cbd5e1;border-radius:12px;font-size:15px;background:#fff;"
+    >
+      <option value="">Do you own your home?</option>
+      <option value="true">Yes</option>
+      <option value="false">No</option>
+    </select>
+
+    <select
+      name="insurance_carrier"
+      id="insurance_carrier"
+      style="width:100%;padding:14px 16px;border:1px solid #cbd5e1;border-radius:12px;font-size:15px;background:#fff;"
+    >
+      <option value="">Current carrier (optional)</option>
+      <option value="21st Century">21st Century</option>
+      <option value="AAA Insurance">AAA Insurance</option>
+      <option value="Allstate">Allstate</option>
+      <option value="Commerce Insurance Co">Commerce Insurance Co</option>
+      <option value="Esurance">Esurance</option>
+      <option value="Farmers Insurance">Farmers Insurance</option>
+      <option value="GEICO">GEICO</option>
+      <option value="GMACNatGenIns">GMACNatGenIns</option>
+      <option value="Liberty Mutual">Liberty Mutual</option>
+      <option value="Met Life Insurance">Met Life Insurance</option>
+      <option value="Nationwide">Nationwide</option>
+      <option value="Other">Other</option>
+      <option value="Progressive">Progressive</option>
+      <option value="SAFECO">SAFECO</option>
+      <option value="State Farm">State Farm</option>
+      <option value="The Hartford">The Hartford</option>
+      <option value="Travelers Insurance">Travelers Insurance</option>
+      <option value="USAA">USAA</option>
+      <option value="Plymouth Rock">Plymouth Rock</option>
+      <option value="Mercury Insurance">Mercury Insurance</option>
+      <option value="SafeAuto">SafeAuto</option>
+      <option value="AIS">AIS</option>
+      <option value="AnswerFinancial">AnswerFinancial</option>
+      <option value="ClearLink">ClearLink</option>
+      <option value="CSAA">CSAA</option>
+      <option value="National General">National General</option>
+      <option value="Foremost">Foremost</option>
+    </select>
+
+    <input
+      type="email"
+      name="email"
+      id="email"
+      placeholder="Email Address (optional)"
+      autocomplete="email"
+      style="width:100%;padding:14px 16px;border:1px solid #cbd5e1;border-radius:12px;font-size:15px;background:#fff;"
+    />
+
+    <button
+      type="submit"
+      class="cta-btn"
+      style="border:none;cursor:pointer;width:100%;"
+    >
+      Check Availability
+    </button>
+
+    <p id="formMessage" style="margin:4px 0 0;color:#475569;font-size:14px;"></p>
+
+    <p style="margin:4px 0 0;color:#64748b;font-size:12px;line-height:1.5;">
+      By clicking “Check Availability,” you agree to be contacted by insurance partners by phone, email, or text where permitted.
+    </p>
+  </div>
+</form>
 </div>
 
             <div class="call-card">
-              <div>
-                <strong>Quick online request</strong><br />
-                <span style="color:#475569;">Enter your name and email, then continue to available quote options.</span>
-              </div>
-              <a class="call-btn" href="#quote">Start Here</a>
-            </div>
+            <div>
+            <strong>Eligibility-based connection</strong><br />
+              <span style="color:#475569;">Answer a few questions first. If an insurance partner is available, you’ll be connected right away.</span>
+          </div>
+          <a class="call-btn" href="#quote">Check Availability</a>
+          </div>
           </div>
         </aside>
       </div>
@@ -605,7 +698,7 @@
       Looking for affordable auto insurance? Estrella Car Insurance helps drivers across the United States compare car insurance quotes quickly and easily. Whether you need liability coverage, full coverage, or protection for a new vehicle, you can explore options tailored to your needs.
     </p>
     <p class="section-copy">
-      Our platform connects you with licensed insurance partners who may offer competitive rates based on your driving history, location, and vehicle type. Start your request online and continue to quote options in just a few clicks.
+  Our platform connects you with insurance partners based on your profile, location, and current insurance status. Answer a few quick questions to check whether a partner is currently available.
     </p>
   </div>
 </section>
@@ -620,15 +713,15 @@
         <div class="grid-3" id="benefits">
           <div class="card">
             <h3>Simple experience</h3>
-            <p>Clear steps, fast access, and a streamlined page designed to help you get started quickly.</p>
+            <p>Answer a few qualifying questions and check live availability in a simple, guided flow.</p>
           </div>
           <div class="card">
             <h3>Coverage options</h3>
-            <p>Review options that may help with liability, full coverage, vehicle protection, and more.</p>
+            <p>Your answers help determine whether an available insurance partner matches your profile.</p>
           </div>
           <div class="card">
             <h3>Built for convenience</h3>
-            <p>Use the online form anytime and continue to the next step right away.</p>
+            <p>If an insurance partner is available, you can connect right away from the same page.</p>
           </div>
         </div>
       </div>
@@ -644,15 +737,15 @@
           </details>
           <details>
             <summary>What happens after I submit my information?</summary>
-            <p>You may be contacted by an insurance partner, agency, or provider based on the information you submit and the consent language shown on the form.</p>
+            <p>Your information is used to check whether an insurance partner is currently available for your profile. If a partner is available, you may be connected right away.</p>
           </details>
           <details>
             <summary>Can I compare different types of coverage?</summary>
-            <p>Yes. Your information helps match you with options that may fit your vehicle, driving history, and coverage preferences.</p>
+            <p>Your answers help determine whether an available insurance partner may match your insurance profile and location.</p>
           </details>
           <details>
             <summary>Can I get help by phone?</summary>
-            <p>You can submit the short form and continue to the next step to view quote options.</p>
+            <p>Yes. After you answer the qualification questions, the system checks whether an insurance partner is currently available for your profile.</p>
           </details>
         </div>
       </div>
@@ -686,79 +779,124 @@
   </footer>
 
   <div class="sticky-mobile">
-    <div class="actions">
-      <a class="cta-btn" href="#quote">Get Quote</a>
-      <a class="call-btn" href="#quote">Start Here</a>
-    </div>
-  </div>  
+  <div class="actions">
+    <a class="cta-btn" href="#quote">Check Availability</a>
+    <a class="call-btn" href="#quote">See If You Qualify</a>
+  </div>
+</div> 
 
 
   <script>
 document.addEventListener("DOMContentLoaded", function () {
   const form = document.getElementById("quoteForm");
   const message = document.getElementById("formMessage");
-  const offerBaseUrl = "https://afflat3c2.com/trk/lnk/2FF6C979-CA31-45BB-BAD4-E81C72472FF7/?o=22134&c=918271&a=792052&k=033548AEA1D28DCEA883151DC8C6AF93&l=22980";
 
-  if (!form || !message) {
-    console.log("MaxBounty form elements not found.");
-    return;
-  }
+  if (!form || !message) return;
 
   function setMessage(text, color) {
     message.textContent = text;
     message.style.color = color || "#475569";
   }
 
-  function cleanName(value) {
-    return (value || "").trim().replace(/\s+/g, " ");
+  function cleanText(value) {
+    return (value || "").trim();
   }
 
-  function isValidEmail(value) {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test((value || "").trim());
+  function isValidPhone(value) {
+    const digits = (value || "").replace(/\D/g, "");
+    return digits.length === 10 || digits.length === 11;
   }
 
-  function buildOfferUrl(firstName, lastName, email) {
-    const clickId = "lead_" + Date.now();
-    const prepopString = `firstName=${firstName}&lastName=${lastName}&email=${email}`;
-    const encodedPrepop = encodeURIComponent(prepopString);
-
-    return offerBaseUrl +
-      "&s1=" + encodeURIComponent(clickId) +
-      "&x=" + encodedPrepop;
+  function normalizePhone(value) {
+    const digits = (value || "").replace(/\D/g, "");
+    if (digits.length === 10) return "+1" + digits;
+    if (digits.length === 11 && digits.startsWith("1")) return "+" + digits;
+    return value;
   }
 
-  form.addEventListener("submit", function (e) {
+  function isValidZip(value) {
+    return /^\d{5}$/.test((value || "").trim());
+  }
+
+  function isValidState(value) {
+    return /^[A-Z]{2}$/.test((value || "").trim().toUpperCase());
+  }
+
+  form.addEventListener("submit", async function (e) {
     e.preventDefault();
 
-    const formData = new FormData(form);
-    const firstName = cleanName(formData.get("first_name"));
-    const lastName = cleanName(formData.get("last_name"));
-    const email = (formData.get("email") || "").trim();
+    const firstName = cleanText(document.getElementById("first_name").value);
+    const lastName = cleanText(document.getElementById("last_name").value);
+    const phone = cleanText(document.getElementById("phone").value);
+    const zipCode = cleanText(document.getElementById("zip_code").value);
+    const state = cleanText(document.getElementById("state").value).toUpperCase();
+    const insured = document.getElementById("is_currently_insured").value;
+    const ownHome = document.getElementById("own_home").value;
+    const carrier = cleanText(document.getElementById("insurance_carrier").value);
+    const email = cleanText(document.getElementById("email").value);
 
-    if (!firstName) {
-      setMessage("Please enter your first name.", "#b91c1c");
-      return;
+    if (!firstName) return setMessage("Please enter your first name.", "#b91c1c");
+    if (!lastName) return setMessage("Please enter your last name.", "#b91c1c");
+    if (!isValidPhone(phone)) return setMessage("Please enter a valid phone number.", "#b91c1c");
+    if (!isValidZip(zipCode)) return setMessage("Please enter a valid 5-digit ZIP code.", "#b91c1c");
+    if (!isValidState(state)) return setMessage("Please enter a valid 2-letter state code.", "#b91c1c");
+    if (!insured) return setMessage("Please select whether you are currently insured.", "#b91c1c");
+    if (!ownHome) return setMessage("Please select whether you own your home.", "#b91c1c");
+
+    setMessage("Checking live availability...", "#166534");
+
+    try {
+      const res = await fetch("/api/bid", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          sessionId: window.__sessionId || localStorage.getItem("sessionId"),
+          first_name: firstName,
+          last_name: lastName,
+          email: email,
+          caller_id: normalizePhone(phone),
+          zip_code: zipCode,
+          is_currently_insured: insured,
+          own_home: ownHome,
+          insurance_carrier: carrier,
+          state: state,
+          media_type: "Social"
+        })
+      });
+
+      const data = await res.json();
+
+      if (data.ok && data.is_available && data.target_number) {
+        setMessage("Agent available now. Connecting your call...", "#166534");
+        setTimeout(function () {
+          window.location.href = "tel:" + data.target_number.replace(/[^\d+]/g, "");
+        }, 500);
+      } else {
+        setMessage("No agent is available right now for this profile. Please try again during campaign hours.", "#b45309");
+      }
+    } catch (err) {
+      setMessage("We could not check availability right now. Please try again.", "#b91c1c");
     }
-
-    if (!lastName) {
-      setMessage("Please enter your last name.", "#b91c1c");
-      return;
-    }
-
-    if (!isValidEmail(email)) {
-      setMessage("Please enter a valid email address.", "#b91c1c");
-      return;
-    }
-
-    setMessage("Redirecting you to quote options...", "#166534");
-
-    const offerUrl = buildOfferUrl(firstName, lastName, email);
-
-    setTimeout(function () {
-      window.location.href = offerUrl;
-    }, 500);
   });
 });
+</script>
+
+<script>
+(async function () {
+  let sessionId = localStorage.getItem("sessionId");
+  if (!sessionId) {
+    const qs = window.location.search || "";
+    const res = await fetch("/api/click" + qs);
+    const data = await res.json();
+    if (data.ok && data.sessionId) {
+      localStorage.setItem("sessionId", data.sessionId);
+      sessionId = data.sessionId;
+    }
+  }
+  window.__sessionId = sessionId;
+})();
 </script>
 
 </body>
