@@ -830,8 +830,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const phone = cleanText(document.getElementById("phone").value);
     const zipCode = cleanText(document.getElementById("zip_code").value);
     const state = cleanText(document.getElementById("state").value).toUpperCase();
-    const insured = document.getElementById("is_currently_insured").value;
-    const ownHome = document.getElementById("own_home").value;
+    const insured = document.getElementById("is_currently_insured").value === "true";
+    const ownHome = document.getElementById("own_home").value === "true";
     const carrier = cleanText(document.getElementById("insurance_carrier").value);
     const email = cleanText(document.getElementById("email").value);
 
