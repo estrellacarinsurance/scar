@@ -852,7 +852,7 @@ document.addEventListener("DOMContentLoaded", function () {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          sessionId: window.__sessionId || localStorage.getItem("sessionId"),
+          sessionId: window.__sessionId || localStorage.getItem("sessionId") || "",
           first_name: firstName,
           last_name: lastName,
           email: email,
@@ -865,6 +865,11 @@ document.addEventListener("DOMContentLoaded", function () {
           media_type: "Social"
         })
       });
+
+      const sessionId = window.__sessionId || localStorage.getItem("sessionId") || "";
+if (!sessionId) {
+  return setMessage("Your session is still loading. Please try again in a moment.", "#b91c1c");
+}
 
       const data = await res.json();
 
