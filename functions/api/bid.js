@@ -37,28 +37,33 @@ export async function onRequestPost(context) {
 
     const session = JSON.parse(existing);
 
-    // With Cloudflare Pseudo IPv4 = Overwrite Headers,
-    // CF-Connecting-IP should arrive as IPv4.
     const cfConnectingIp = request.headers.get("CF-Connecting-IP") || "";
     const cfConnectingIpv6 = request.headers.get("CF-Connecting-IPv6") || "";
     const cfPseudoIpv4 = request.headers.get("CF-Pseudo-IPv4") || "";
     const userAgent = request.headers.get("user-agent") || "";
 
+    // Prefer real IPv4 if present, otherwise fall back to Cloudflare pseudo IPv4
+    const bidIp = isIPv4(cfConnectingIp)
+      ? cfConnectingIp
+      : isIPv4(cfPseudoIpv4)
+        ? cfPseudoIpv4
+        : "";
+
     const debugHeaders = {
       cfConnectingIp,
       cfConnectingIpv6,
       cfPseudoIpv4,
+      selectedBidIp: bidIp,
       userAgent,
       checkedAt: new Date().toISOString()
     };
 
-    // Require valid IPv4 because campaign requires IP_Address
-    if (!isIPv4(cfConnectingIp)) {
+    if (!bidIp) {
       await env.TRACKER_KV.put(
         `bid_error:${sessionId}`,
         JSON.stringify({
           createdAt: new Date().toISOString(),
-          reason: "CF-Connecting-IP is not a valid IPv4",
+          reason: "No valid IPv4 available for MarketCall bid request",
           debugHeaders,
           body: {
             sessionId,
@@ -77,7 +82,7 @@ export async function onRequestPost(context) {
       return Response.json(
         {
           ok: false,
-          error: "Client IP is not available as IPv4. Check Cloudflare Pseudo IPv4 = Overwrite Headers."
+          error: "No valid IPv4 available for bid request."
         },
         { status: 422 }
       );
@@ -91,7 +96,7 @@ export async function onRequestPost(context) {
         is_currently_insured === true || is_currently_insured === "true",
       own_home: own_home === true || own_home === "true",
       insurance_carrier,
-      IP_Address: cfConnectingIp,
+      IP_Address: bidIp,
       Landing_Page:
         session.landingPage || "https://www.estrellacarinsurance.com/",
       Pub_ID: pub_id || sessionId,
