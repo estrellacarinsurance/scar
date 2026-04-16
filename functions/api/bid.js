@@ -1,6 +1,10 @@
 export async function onRequestPost(context) {
   const { request, env } = context;
 
+  function isIPv4(ip) {
+    return /^(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}$/.test(ip || "");
+  }
+
   try {
     const body = await request.json();
 
@@ -17,30 +21,84 @@ export async function onRequestPost(context) {
     } = body;
 
     if (!sessionId || !caller_id) {
-      return Response.json({ ok: false, error: "Missing sessionId or caller_id" }, { status: 400 });
+      return Response.json(
+        { ok: false, error: "Missing sessionId or caller_id" },
+        { status: 400 }
+      );
     }
 
     const existing = await env.TRACKER_KV.get(`session:${sessionId}`);
     if (!existing) {
-      return Response.json({ ok: false, error: "Invalid session" }, { status: 400 });
+      return Response.json(
+        { ok: false, error: "Invalid session" },
+        { status: 400 }
+      );
     }
 
     const session = JSON.parse(existing);
 
+    // With Cloudflare Pseudo IPv4 = Overwrite Headers,
+    // CF-Connecting-IP should arrive as IPv4.
+    const cfConnectingIp = request.headers.get("CF-Connecting-IP") || "";
+    const cfConnectingIpv6 = request.headers.get("CF-Connecting-IPv6") || "";
+    const cfPseudoIpv4 = request.headers.get("CF-Pseudo-IPv4") || "";
+    const userAgent = request.headers.get("user-agent") || "";
+
+    const debugHeaders = {
+      cfConnectingIp,
+      cfConnectingIpv6,
+      cfPseudoIpv4,
+      userAgent,
+      checkedAt: new Date().toISOString()
+    };
+
+    // Require valid IPv4 because campaign requires IP_Address
+    if (!isIPv4(cfConnectingIp)) {
+      await env.TRACKER_KV.put(
+        `bid_error:${sessionId}`,
+        JSON.stringify({
+          createdAt: new Date().toISOString(),
+          reason: "CF-Connecting-IP is not a valid IPv4",
+          debugHeaders,
+          body: {
+            sessionId,
+            caller_id,
+            zip_code,
+            is_currently_insured,
+            own_home,
+            insurance_carrier,
+            state,
+            pub_id,
+            media_type
+          }
+        })
+      );
+
+      return Response.json(
+        {
+          ok: false,
+          error: "Client IP is not available as IPv4. Check Cloudflare Pseudo IPv4 = Overwrite Headers."
+        },
+        { status: 422 }
+      );
+    }
+
     const payload = {
-  campaign_id: "340938",
-  caller_id,
-  zip_code,
-  is_currently_insured: is_currently_insured === true || is_currently_insured === "true",
-  own_home: own_home === true || own_home === "true",
-  insurance_carrier,
-  IP_Address: request.headers.get("CF-Connecting-IP") || "",
-  Landing_Page: session.landingPage || "https://www.estrellacarinsurance.com/",
-  Pub_ID: pub_id || sessionId,
-  Media_Type: media_type,
-  User_Agent: request.headers.get("user-agent") || "",
-  state
-};
+      campaign_id: "340938",
+      caller_id,
+      zip_code,
+      is_currently_insured:
+        is_currently_insured === true || is_currently_insured === "true",
+      own_home: own_home === true || own_home === "true",
+      insurance_carrier,
+      IP_Address: cfConnectingIp,
+      Landing_Page:
+        session.landingPage || "https://www.estrellacarinsurance.com/",
+      Pub_ID: pub_id || sessionId,
+      Media_Type: media_type,
+      User_Agent: userAgent,
+      state
+    };
 
     const mcResp = await fetch(
       "https://www.marketcall.com/api/v1/affiliate/offers/10702/bid-requests",
@@ -61,6 +119,7 @@ export async function onRequestPost(context) {
       JSON.stringify({
         createdAt: new Date().toISOString(),
         request: payload,
+        debugHeaders,
         response: mcJson
       })
     );
@@ -74,7 +133,7 @@ export async function onRequestPost(context) {
       target_number: data.target_number || "",
       payout: data?.earn?.amount || null,
       duration: data?.terms?.duration || null,
-      expires_at: mcJson?.expires_at || null,
+      expires_at: data?.expires_at || mcJson?.expires_at || null,
       raw: mcJson
     });
   } catch (err) {
