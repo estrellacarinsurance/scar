@@ -830,8 +830,10 @@ document.addEventListener("DOMContentLoaded", function () {
     const phone = cleanText(document.getElementById("phone").value);
     const zipCode = cleanText(document.getElementById("zip_code").value);
     const state = cleanText(document.getElementById("state").value).toUpperCase();
-    const insured = document.getElementById("is_currently_insured").value === "true";
-    const ownHome = document.getElementById("own_home").value === "true";
+    const insuredValue = document.getElementById("is_currently_insured").value;
+    const ownHomeValue = document.getElementById("own_home").value;
+    const insured = insuredValue === "true";
+    const ownHome = ownHomeValue === "true";
     const carrier = cleanText(document.getElementById("insurance_carrier").value);
     const email = cleanText(document.getElementById("email").value);
 
@@ -840,8 +842,8 @@ document.addEventListener("DOMContentLoaded", function () {
     if (!isValidPhone(phone)) return setMessage("Please enter a valid phone number.", "#b91c1c");
     if (!isValidZip(zipCode)) return setMessage("Please enter a valid 5-digit ZIP code.", "#b91c1c");
     if (!isValidState(state)) return setMessage("Please enter a valid 2-letter state code.", "#b91c1c");
-    if (!insured) return setMessage("Please select whether you are currently insured.", "#b91c1c");
-    if (!ownHome) return setMessage("Please select whether you own your home.", "#b91c1c");
+    if (insuredValue === "") return setMessage("Please select whether you are currently insured.", "#b91c1c");
+    if (ownHomeValue === "") return setMessage("Please select whether you own your home.", "#b91c1c");
 
     setMessage("Checking live availability...", "#166534");
 
