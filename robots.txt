@@ -1,0 +1,23 @@
+User-agent: *
+Allow: /
+
+# Block unnecessary or sensitive paths
+Disallow: /api/
+Disallow: /cdn-cgi/
+Disallow: /_worker/
+Disallow: /private/
+Disallow: /tmp/
+Disallow: /*?*
+Disallow: /*&*
+
+# Allow important assets
+Allow: /*.js$
+Allow: /*.css$
+Allow: /*.png$
+Allow: /*.jpg$
+Allow: /*.jpeg$
+Allow: /*.webp$
+Allow: /*.svg$
+
+# Sitemap location
+Sitemap: https://estrellacarinsurance.com/sitemap.xml
