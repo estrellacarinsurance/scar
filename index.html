@@ -915,13 +915,26 @@ if (!sessionId) {
       const data = await res.json();
 
       if (data.ok && data.is_available && data.target_number) {
-        setMessage("Agent available now. Connecting your call...", "#166534");
-        setTimeout(function () {
-          window.location.href = "tel:" + data.target_number.replace(/[^\d+]/g, "");
-        }, 500);
-      } else {
-        setMessage("No agent is available right now for this profile. Please try again during campaign hours.", "#b45309");
-      }
+  setMessage("Agent available now. Connecting your call...", "#166534");
+
+  try {
+    if (typeof fbq === "function") {
+      fbq("track", "Lead");
+      fbq("track", "Contact");
+    }
+  } catch (pixelError) {
+    console.warn("Meta Pixel tracking failed:", pixelError);
+  }
+
+  const phoneNumber = data.target_number.replace(/[^\d+]/g, "");
+
+  setTimeout(function () {
+    window.location.href = "tel:" + phoneNumber;
+  }, 500);
+
+} else {
+  setMessage("No agent is available right now for this profile. Please try again during campaign hours.", "#b45309");
+}
     } catch (err) {
       setMessage("We could not check availability right now. Please try again.", "#b91c1c");
     }
