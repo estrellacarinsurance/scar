@@ -108,7 +108,9 @@ footer{border-top:1px solid var(--line);background:#fff}.footer-wrap{padding:28p
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
 
-  gtag('config', 'AW-18099750591');
+  gtag('config', 'AW-18099750591', {
+  'transport_type': 'beacon'
+});
 </script>
 </head>
 <body>
@@ -391,6 +393,31 @@ document.addEventListener("DOMContentLoaded", function () {
   }
   window.__sessionId = sessionId;
 })();
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+  let engaged = false;
+
+  function markEngaged() {
+    if (!engaged && typeof gtag === "function") {
+      engaged = true;
+
+      gtag('event', 'manual_engagement', {
+        event_category: 'engagement',
+        event_label: window.location.pathname
+      });
+    }
+  }
+
+  // scroll trigger
+  window.addEventListener("scroll", markEngaged);
+
+  // time trigger
+  setTimeout(markEngaged, 15000);
+
+});
 </script>
 
 </body>
