@@ -684,7 +684,44 @@
         align-items: flex-start;
       }
 
-      .logo { height: 74px; }
+      .logo {
+        height: 74px;
+      }
+
+      /* MOBILE CONVERSION OPTIMIZATION */
+      .hero {
+        padding-top: 10px;
+      }
+
+      .hero-grid {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .hero-form {
+        order: 1;
+      }
+
+      .hero-copy {
+        order: 2;
+        padding: 22px;
+      }
+
+      .hero-copy h1 {
+        font-size: 1.9rem;
+        line-height: 1.1;
+      }
+
+      .hero-visual,
+      .quick-points,
+      .trust-row,
+      .step-box {
+        display: none;
+      }
+
+      .form-shell {
+        padding: 18px;
+      }
 
       .sticky-mobile {
         position: sticky;
