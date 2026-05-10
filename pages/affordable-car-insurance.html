@@ -70,7 +70,27 @@ footer{border-top:1px solid var(--line);background:#fff}.footer-wrap{padding:28p
 .legal a{color:var(--brand);text-decoration:underline}
 .sticky-mobile{display:none}
 @media (max-width:980px){.hero-grid,.grid-3,.grid-2,.quick-points{grid-template-columns:1fr}.nav-links{display:none}.logo{height:84px}.brand-title{font-size:1.12rem}.brand-subtitle{font-size:.72rem}}
-@media (max-width:720px){.topbar .container,.call-card,.hero-actions{flex-direction:column;align-items:stretch}.nav .container{justify-content:center}.brand{width:100%;justify-content:center;text-align:center}.sticky-mobile{position:sticky;bottom:0;display:block;background:rgba(255,255,255,.95);backdrop-filter:blur(8px);border-top:1px solid var(--line);padding:12px 16px;z-index:50}.sticky-mobile .cta-btn,.sticky-mobile .call-btn{width:100%}.sticky-mobile .actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}}
+@media (max-width:720px){
+  .topbar .container,.call-card,.hero-actions{flex-direction:column;align-items:stretch}
+  .nav{padding:10px 0}
+  .nav .container{justify-content:center}
+  .brand{width:100%;justify-content:center;text-align:center}
+  .brand-copy{align-items:flex-start}
+  .logo{height:74px}
+
+  /* MOBILE CONVERSION OPTIMIZATION - same behavior as index.html */
+  .hero{padding-top:10px}
+  .hero-grid{display:flex;flex-direction:column}
+  .hero-form{order:1}
+  .hero-copy{order:2;padding:22px}
+  .hero-copy h1{font-size:1.9rem;line-height:1.1}
+  .quick-points{display:none}
+  .form-shell{padding:18px}
+
+  .sticky-mobile{position:sticky;bottom:0;display:block;background:rgba(255,255,255,.95);backdrop-filter:blur(8px);border-top:1px solid var(--line);padding:12px 16px;z-index:50}
+  .sticky-mobile .cta-btn,.sticky-mobile .call-btn{width:100%}
+  .sticky-mobile .actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+}
 </style>
 <!-- Meta Pixel Code -->
 <script>
@@ -114,7 +134,25 @@ footer{border-top:1px solid var(--line);background:#fff}.footer-wrap{padding:28p
   gtag('config', 'G-FCWVH473KH');
 </script>
 <!-- End Google tag (gtag.js) -->
-</meta></head>
+
+<!-- Event snippet for Request quote conversion page -->
+<script>
+  gtag('event', 'conversion', {'send_to': 'AW-1028822557/3elBCOeo8KgcEJ2syuoD'});
+</script>
+<!-- End Event snippet for Request quote conversion page -->
+
+<!-- Event snippet for Page view (2) conversion page -->
+<script>
+  gtag('event', 'conversion', {
+      'send_to': 'AW-1028822557/IL_hCM7l76gcEJ2syuoD',
+      'value': 1.0,
+      'currency': 'BRL'
+  });
+</script>
+<!-- End Event snippet for Page view (2) conversion page -->
+
+
+</head>
 <body>
 <div class="topbar">
 <div class="container">
