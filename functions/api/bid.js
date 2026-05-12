@@ -48,8 +48,8 @@ export async function onRequestPost(context) {
     // Practical split-state ZIP approximations for lead filtering.
     if (state === "FL" && zip3 && (zip3 === 324 || zip3 === 325)) return "America/Chicago"; // Florida panhandle
     if (state === "TX" && zip3 && (zip3 === 798 || zip3 === 799 || zip3 === 885)) return "America/Denver"; // El Paso region
-    if (state === "ID" && zip3 && zip3 >= 832 && zip3 <= 838) return "America/Boise";
     if (state === "ID" && zip3 && zip3 >= 835 && zip3 <= 838) return "America/Los_Angeles"; // north Idaho
+    if (state === "ID" && zip3 && zip3 >= 832 && zip3 <= 834) return "America/Boise";
     if (state === "OR" && zip3 && (zip3 === 979)) return "America/Boise"; // Malheur area
     if (state === "TN" && zip3 && zip3 >= 370 && zip3 <= 385) return "America/Chicago";
     if (state === "TN" && zip3 && zip3 >= 376 && zip3 <= 379) return "America/New_York";
@@ -64,7 +64,7 @@ export async function onRequestPost(context) {
 
   function daysMatch(days, weekday) {
     const map = { Sun:"sun", Mon:"mon", Tue:"tue", Wed:"wed", Thu:"thu", Fri:"fri", Sat:"sat" };
-    return days.includes(map[weekday]);
+    return days && typeof days.has === "function" ? days.has(map[weekday]) : Array.isArray(days) ? days.includes(map[weekday]) : false;
   }
   function minutes(hhmm) {
     const [h, m = "0"] = String(hhmm).split(":");
