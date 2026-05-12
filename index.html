@@ -63,42 +63,29 @@
 </noscript>
 <!-- End Meta Pixel Code -->
 
-
 <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18099750591"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-FCWVH473KH"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
 
-  // Google Ads 1
-  gtag('config', 'AW-18099750591');
-
-  // Google Ads 2
-  gtag('config', 'AW-1028822557');
-
-  // Google Analytics GA4
+  // Google Analytics (REAL tracking)
   gtag('config', 'G-FCWVH473KH');
+
+  // Google Ads (keep your conversion tracking)
+  gtag('config', 'AW-1028822557');
 </script>
+
+<!-- End Google tag (gtag.js) -->
+
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-T23CFR2H');</script>
 <!-- End Google Tag Manager -->
-
-<!-- Event snippet for Request quote conversion page -->
-<script>
-  gtag('event', 'conversion', {'send_to': 'AW-1028822557/3elBCOeo8KgcEJ2syuoD'});
-</script>
-<!-- End Event snippet for Request quote conversion page -->
-
-<!-- Event snippet for Page view (2) conversion page -->
-<script>
-  gtag('event', 'conversion', {
-      'send_to': 'AW-1028822557/IL_hCM7l76gcEJ2syuoD',
-      'value': 1.0,
-      'currency': 'BRL'
-  });
-</script>
-<!-- End Event snippet for Page view (2) conversion page -->
-
-
 
 
 <!-- Twitter -->
@@ -476,178 +463,11 @@
       display: none;
     }
 
-
-
-    .hero-visual {
-      margin-top: 24px;
-      display: grid;
-      grid-template-columns: 1fr 0.82fr;
-      gap: 14px;
-      align-items: stretch;
-    }
-
-    .hero-photo,
-    .side-photo,
-    .wide-photo {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      border-radius: 22px;
-      border: 1px solid rgba(226,232,240,0.9);
-      box-shadow: 0 18px 35px rgba(15, 23, 42, 0.10);
-      background: #e2e8f0;
-    }
-
-    .hero-photo { min-height: 245px; }
-    .side-photo { min-height: 245px; }
-
-    .trust-row {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 12px;
-      margin-top: 18px;
-    }
-
-    .trust-item {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      background: #fff;
-      border: 1px solid var(--line);
-      border-radius: 16px;
-      padding: 12px 14px;
-      color: #334155;
-      font-size: 14px;
-      font-weight: 700;
-    }
-
-    .step-box {
-      background: #f8fafc;
-      border: 1px solid #e2e8f0;
-      border-radius: 18px;
-      padding: 16px;
-      margin-bottom: 16px;
-    }
-
-    .step-box strong {
-      display: block;
-      margin-bottom: 10px;
-      font-size: 15px;
-    }
-
-    .steps-mini {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 8px;
-    }
-
-    .step-mini {
-      background: #fff;
-      border: 1px solid #e2e8f0;
-      border-radius: 14px;
-      padding: 10px;
-      font-size: 12px;
-      color: #475569;
-      line-height: 1.35;
-    }
-
-    .step-mini b {
-      display: block;
-      color: #0f172a;
-      font-size: 13px;
-      margin-bottom: 2px;
-    }
-
-    .visual-card {
-      display: grid;
-      grid-template-columns: 0.92fr 1.08fr;
-      gap: 22px;
-      align-items: center;
-      background: #fff;
-      border: 1px solid var(--line);
-      border-radius: 26px;
-      padding: 18px;
-      box-shadow: var(--shadow);
-    }
-
-    .check-list {
-      list-style: none;
-      padding: 0;
-      margin: 18px 0 0;
-      display: grid;
-      gap: 10px;
-    }
-
-    .check-list li {
-      color: #475569;
-      padding-left: 30px;
-      position: relative;
-    }
-
-    .check-list li::before {
-      content: "✓";
-      position: absolute;
-      left: 0;
-      top: 0;
-      width: 20px;
-      height: 20px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 999px;
-      background: #dcfce7;
-      color: #166534;
-      font-size: 13px;
-      font-weight: 900;
-    }
-
-    .compare-strip {
-      margin-top: 22px;
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 12px;
-    }
-
-    .compare-pill {
-      background: #ffffff;
-      border: 1px solid var(--line);
-      border-radius: 16px;
-      padding: 14px;
-      font-size: 14px;
-      color: #475569;
-    }
-
-    .compare-pill strong {
-      display: block;
-      color: #0f172a;
-      margin-bottom: 4px;
-    }
-
-    .soft-banner {
-      background: linear-gradient(135deg, #0f172a, #1e3a8a);
-      color: #fff;
-      border-radius: 28px;
-      padding: 30px;
-      display: grid;
-      grid-template-columns: 1.2fr 0.8fr;
-      gap: 18px;
-      align-items: center;
-      overflow: hidden;
-    }
-
-    .soft-banner p { color: #dbeafe; margin: 0; }
-    .soft-banner h2 { margin: 0 0 10px; font-size: clamp(1.6rem, 3vw, 2.3rem); letter-spacing: -0.03em; }
-
     @media (max-width: 980px) {
       .hero-grid,
       .grid-3,
       .grid-2,
-      .quick-points,
-      .hero-visual,
-      .trust-row,
-      .visual-card,
-      .compare-strip,
-      .soft-banner {
+      .quick-points {
         grid-template-columns: 1fr;
       }
 
@@ -656,7 +476,6 @@
       .logo { height: 88px; }
       .brand-title { font-size: 1.15rem; }
       .brand-subtitle { font-size: 0.72rem; }
-      .steps-mini { grid-template-columns: 1fr; }
     }
 
     @media (max-width: 720px) {
@@ -685,44 +504,7 @@
         align-items: flex-start;
       }
 
-      .logo {
-        height: 74px;
-      }
-
-      /* MOBILE CONVERSION OPTIMIZATION */
-      .hero {
-        padding-top: 10px;
-      }
-
-      .hero-grid {
-        display: flex;
-        flex-direction: column;
-      }
-
-      .hero-form {
-        order: 1;
-      }
-
-      .hero-copy {
-        order: 2;
-        padding: 22px;
-      }
-
-      .hero-copy h1 {
-        font-size: 1.9rem;
-        line-height: 1.1;
-      }
-
-      .hero-visual,
-      .quick-points,
-      .trust-row,
-      .step-box {
-        display: none;
-      }
-
-      .form-shell {
-        padding: 18px;
-      }
+      .logo { height: 74px; }
 
       .sticky-mobile {
         position: sticky;
@@ -754,8 +536,8 @@
 <body>
 
 <!-- Google Tag Manager (noscript) -->
-
-
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T23CFR2H"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
 
   <div class="topbar">
@@ -788,54 +570,35 @@
       <div class="container hero-grid">
         <div class="hero-copy">
           <div class="eyebrow">Connect with available insurance partners</div>
-          <h1>Stop Overpaying for Car Insurance — Check If You Qualify in 60 Seconds</h1>
-          <p>Drivers are comparing auto insurance options to find better coverage and possible savings. Answer a few quick questions, check live availability, and if an agent is available, call instantly from your phone.</p>
+          <h1>Check Auto Insurance Availability in Minutes</h1>
+          <p>  Answer a few quick questions to see whether an insurance partner is available for your profile.
+               If an agent is available, you’ll be connected right away.</p>
           <div class="hero-actions">
-          <a class="cta-btn" href="#quote">Check If You Qualify Now</a>
-          <a class="secondary-btn" href="#quote">Speak to an Agent</a>
+          <a class="cta-btn" href="#quote">Check Availability</a>
+          <a class="secondary-btn" href="#quote">See If You Qualify</a>
           </div>
 
           <div class="quick-points">
   <div class="point">
     <strong>Fast qualification</strong>
-    <span>Complete the quick form in about 60 seconds.</span>
+    <span>Answer a few quick questions to check availability.</span>
   </div>
   <div class="point">
-    <strong>Smart comparison</strong>
-    <span>Your profile helps check available insurance options.</span>
+    <strong>Profile-based routing</strong>
+    <span>Your answers help match you with an available insurance partner.</span>
   </div>
   <div class="point">
-    <strong>Call the agent</strong>
-    <span>If available, tap the generated number and speak live.</span>
+    <strong>Live connection</strong>
+    <span>If a partner is available, you can connect right away.</span>
   </div>
 </div>
-
-          <div class="trust-row" aria-label="Trust highlights">
-            <div class="trust-item">✓ Free to check</div>
-            <div class="trust-item">✓ No obligation</div>
-            <div class="trust-item">✓ Live agent routing</div>
-          </div>
-
-          <div class="hero-visual" aria-label="Car insurance visual examples">
-            <img class="hero-photo" src="https://images.unsplash.com/photo-1583267746897-2cf415887172?q=80&w=1200&auto=format&fit=crop" alt="Driver speaking with an insurance agent by phone inside a car">
-            <img class="side-photo" src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?q=80&w=900&auto=format&fit=crop" alt="Insurance agent helping a customer compare auto insurance options">
-          </div>
           
         </div>
 
         <aside class="hero-form" id="quote">
           <div class="form-shell">
-            <h2>Check If You Qualify</h2>
-            <p>Start with the quick form. We check live availability first, then you can call the agent if one is available.</p>
-
-            <div class="step-box">
-              <strong>What to do next</strong>
-              <div class="steps-mini">
-                <div class="step-mini"><b>1. Fill form</b>Name, phone, ZIP, and profile.</div>
-                <div class="step-mini"><b>2. Check availability</b>We look for a matching partner.</div>
-                <div class="step-mini"><b>3. Call agent</b>If available, your phone opens the call.</div>
-              </div>
-            </div>
+            <h2>Check Availability</h2>
+            <p>Answer a few quick questions so we can check whether an insurance partner is currently available for your profile.</p>
            
            <div id="lead-form">
   <form id="quoteForm" class="lead-form-box">
@@ -964,13 +727,10 @@
       class="cta-btn"
       style="border:none;cursor:pointer;width:100%;"
     >
-      Check If You Qualify Now
+      Check Availability
     </button>
 
     <p id="formMessage" style="margin:4px 0 0;color:#475569;font-size:14px;"></p>
-
-    <p style="margin:2px 0 0;color:#b45309;font-size:13px;line-height:1.45;">Agents may be available only during active campaign hours.</p>
-    <p style="margin:0;color:#64748b;font-size:12px;line-height:1.45;">No obligation • Free to check • Takes under 60 seconds</p>
 
     <p style="margin:4px 0 0;color:#64748b;font-size:12px;line-height:1.5;">
       By clicking “Check Availability,” you agree to be contacted by insurance partners by phone, email, or text where permitted.
@@ -981,10 +741,10 @@
 
             <div class="call-card">
             <div>
-            <strong>Clear call process</strong><br />
-              <span style="color:#475569;">Submit the form first. If an insurance partner is available, your phone will open the call number.</span>
+            <strong>Eligibility-based connection</strong><br />
+              <span style="color:#475569;">Answer a few questions first. If an insurance partner is available, you’ll be connected right away.</span>
           </div>
-          <a class="call-btn" href="#quote">Check If You Qualify Now</a>
+          <a class="call-btn" href="#quote">Check Availability</a>
           </div>
           </div>
         </aside>
@@ -993,73 +753,36 @@
 
     <section class="sections">
   <div class="container">
-    <h2 class="section-title">Compare Auto Insurance Options Before You Keep Overpaying</h2>
+    <h2 class="section-title">Compare Auto Insurance Quotes in the United States</h2>
     <p class="section-copy">
-      Auto insurance prices can change by driver profile, ZIP code, vehicle, coverage type, and current insurance status. Estrella Car Insurance helps you start the comparison process quickly, then connects you with available insurance partners when your profile matches.
+      Looking for affordable auto insurance? Estrella Car Insurance helps drivers across the United States compare car insurance quotes quickly and easily. Whether you need liability coverage, full coverage, or protection for a new vehicle, you can explore options tailored to your needs.
     </p>
-    <div class="compare-strip">
-      <div class="compare-pill"><strong>Liability</strong>Basic protection options.</div>
-      <div class="compare-pill"><strong>Full coverage</strong>For financed or newer cars.</div>
-      <div class="compare-pill"><strong>Low-cost options</strong>Check possible savings.</div>
-      <div class="compare-pill"><strong>Fast call flow</strong>Form first, call next.</div>
-    </div>
-  </div>
-</section>
-
-<section class="sections" style="padding-top:0;">
-  <div class="container">
-    <div class="visual-card">
-      <div>
-        <img class="wide-photo" src="https://images.unsplash.com/photo-1580273916550-e323be2ae537?q=80&w=1200&auto=format&fit=crop" alt="Car parked on city street">
-      </div>
-      <div>
-        <h2 class="section-title" style="margin-bottom:10px;">Built for real drivers who want clear answers</h2>
-        <p class="section-copy" style="margin:0;">No confusing pages. No guessing what happens next. Fill the form, check availability, and call the agent if your profile qualifies for a live connection.</p>
-        <ul class="check-list">
-          <li>Good for drivers comparing rates before renewing.</li>
-          <li>Useful if your current premium feels too high.</li>
-          <li>Works for drivers looking for liability or full coverage options.</li>
-          <li>Designed to make the next step clear on mobile.</li>
-        </ul>
-      </div>
-    </div>
+    <p class="section-copy">
+  Our platform connects you with insurance partners based on your profile, location, and current insurance status. Answer a few quick questions to check whether a partner is currently available.
+    </p>
   </div>
 </section>
 
     <section class="sections" id="why-us">
       <div class="container">
-        <h2 class="section-title">A Friendlier Way to Start Your Insurance Search</h2>
+        <h2 class="section-title">Why Drivers Choose Estrella</h2>
         <p class="section-copy">
-          The page is designed to help you understand the process before you submit anything: compare, check availability, and call only when an agent is available.
+          We make it simple to explore auto insurance options and connect with providers that match your needs.
         </p>
 
         <div class="grid-3" id="benefits">
           <div class="card">
-            <h3>Simple guided flow</h3>
-            <p>Clear steps show exactly what happens after you complete the form.</p>
+            <h3>Simple experience</h3>
+            <p>Answer a few qualifying questions and check live availability in a simple, guided flow.</p>
           </div>
           <div class="card">
-            <h3>Profile-based options</h3>
-            <p>Your ZIP code, current insurance, and profile help check available partner options.</p>
+            <h3>Coverage options</h3>
+            <p>Your answers help determine whether an available insurance partner matches your profile.</p>
           </div>
           <div class="card">
-            <h3>Mobile call ready</h3>
-            <p>If an insurance partner is available, your phone can open the call right away.</p>
+            <h3>Built for convenience</h3>
+            <p>If an insurance partner is available, you can connect right away from the same page.</p>
           </div>
-        </div>
-      </div>
-    </section>
-
-
-
-    <section class="sections" style="padding-top:0;">
-      <div class="container">
-        <div class="soft-banner">
-          <div>
-            <h2>Ready to check your car insurance options?</h2>
-            <p>Complete the short form above. If an agent is available for your profile, you can connect right away.</p>
-          </div>
-          <a class="call-btn" href="#quote" style="justify-self:start;">Check If You Qualify Now</a>
         </div>
       </div>
     </section>
@@ -1070,11 +793,11 @@
         <div class="faq">
           <details open>
             <summary>Is Estrella Car Insurance an insurance carrier?</summary>
-            <p>Estrella Car Insurance helps drivers request auto insurance quote options and connect with insurance providers and agencies that may offer coverage.</p>
+            <p>Estrella Car Insurance connects drivers with insurance providers and agencies that offer coverage options.</p>
           </details>
           <details>
             <summary>What happens after I submit my information?</summary>
-            <p>Your information is used to check whether an insurance partner is currently available for your profile. If available, the page will open the call so you can speak with an agent.</p>
+            <p>Your information is used to check whether an insurance partner is currently available for your profile. If a partner is available, you may be connected right away.</p>
           </details>
           <details>
             <summary>Can I compare different types of coverage?</summary>
@@ -1117,8 +840,8 @@
 
   <div class="sticky-mobile">
   <div class="actions">
-    <a class="cta-btn" href="#quote">Check If You Qualify Now</a>
-    <a class="call-btn" href="#quote">Speak to an Agent</a>
+    <a class="cta-btn" href="#quote">Check Availability</a>
+    <a class="call-btn" href="#quote">See If You Qualify</a>
   </div>
 </div> 
 
