@@ -131,7 +131,7 @@
           <input type="email" name="email" id="email" placeholder="Email Address (optional)" autocomplete="email" style="width:100%;padding:14px 16px;border:1px solid #cbd5e1;border-radius:12px;font-size:15px;background:#fff;" />
           <button type="submit" class="cta-btn" style="border:none;cursor:pointer;width:100%;">Check If You Qualify Now</button>
           <p id="formMessage" style="margin:4px 0 0;color:#475569;font-size:14px;"></p>
-          <p style="margin:2px 0 0;color:#b45309;font-size:13px;line-height:1.45;">Agents may be available only during active campaign hours.</p><p style="margin:0;color:#64748b;font-size:12px;line-height:1.45;">No obligation • Free to check • Takes under 60 seconds</p><p style="margin:4px 0 0;color:#64748b;font-size:12px;line-height:1.5;">By clicking “Check Availability,” you agree to be contacted by insurance partners by phone, email, or text where permitted.</p>
+          <p style="margin:2px 0 0;color:#b45309;font-size:13px;line-height:1.45;">Live agents depend on campaign availability and profile match.</p><p style="margin:0;color:#64748b;font-size:12px;line-height:1.45;">No obligation • Free to check • Takes under 60 seconds</p><p style="margin:4px 0 0;color:#64748b;font-size:12px;line-height:1.5;">By clicking “Check Availability,” you agree to be contacted by insurance partners by phone, email, or text where permitted.</p>
         </div></form></div>
         <div class="call-card"><div><strong>Clear call process</strong><br><span style="color:#475569;">Submit the form first. If an insurance partner is available, your phone will open the call number.</span></div><a class="call-btn" href="#quote">Check If You Qualify Now</a></div>
       </div></aside></div></section>
@@ -271,13 +271,17 @@
       try { if (navigator.vibrate) navigator.vibrate(180); } catch (e) {}
     }
 
-    function showNoAgent() {
+    function showNoAgent(serverMessage) {
       clearInterval(statusTimer);
+      card.classList.remove("success");
+      setStep(2);
       title.textContent = "No live agent available right now";
-      overlayMessage.textContent = "We could not find an available partner for this profile right now. Please try again during active campaign hours.";
-      smallText.textContent = "You can return to the form and try again later.";
+      overlayMessage.textContent = serverMessage || "We could not find an available insurance partner for this profile right now.";
+      smallText.textContent = "Best time to try: Monday-Friday, 9 AM-8 PM Eastern. You can return to the form and try again later.";
       closeButton.style.display = "inline-block";
       callButton.classList.remove("is-visible");
+      callButton.removeAttribute("href");
+      callButton.textContent = "";
     }
 
     function closeConnecting() {
@@ -353,8 +357,15 @@
 
           setTimeout(function () { window.location.href = "tel:" + phoneNumber; }, 900);
         } else {
-          setMessage("No agent is available right now for this profile. Please try again during campaign hours.", "#b45309");
-          showNoAgent();
+          const unavailableMessage = data.message || "No agent is available right now for this profile. Please try again during campaign hours.";
+          setMessage(unavailableMessage, "#b45309");
+          showNoAgent(unavailableMessage);
+
+          try {
+            if (typeof gtag === "function") {
+              gtag("event", "lead_bid_unavailable", { event_category: "pay_per_call", event_label: "no_agent_available" });
+            }
+          } catch (trackingError) { console.warn("Unavailable tracking failed:", trackingError); }
         }
       } catch (err) {
         setMessage("We could not check availability right now. Please try again.", "#b91c1c");
