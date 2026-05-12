@@ -17,7 +17,7 @@ export async function onRequestPost(context) {
       insurance_carrier,
       state,
       pub_id = "",
-      media_type = "Landing_Page"
+      media_type = "Paid Search"
     } = body;
 
     if (!sessionId || !caller_id) {
@@ -58,6 +58,44 @@ export async function onRequestPost(context) {
       checkedAt: new Date().toISOString()
     };
 
+    // Normalize Media_Type for MarketCall.
+    // Campaign allows Paid Search and Social. Avoid forcing direct/incognito users as Social.
+    function normalizeMediaType(value) {
+      const raw = String(value || "").trim().toLowerCase();
+
+      if (
+        raw === "social" ||
+        raw.includes("facebook") ||
+        raw.includes("instagram") ||
+        raw.includes("tiktok") ||
+        raw.includes("reddit") ||
+        raw.includes("nextdoor")
+      ) {
+        return "Social";
+      }
+
+      if (
+        raw === "paid search" ||
+        raw === "search" ||
+        raw === "google" ||
+        raw === "google ads" ||
+        raw === "ppc" ||
+        raw === "cpc" ||
+        raw === "sem" ||
+        raw === "landing_page" ||
+        raw === "landing page" ||
+        raw === "direct" ||
+        raw === ""
+      ) {
+        return "Paid Search";
+      }
+
+      // Safe fallback for this campaign because Paid Search is explicitly allowed.
+      return "Paid Search";
+    }
+
+    const normalizedMediaType = normalizeMediaType(media_type);
+
     if (!bidIp) {
       await env.TRACKER_KV.put(
         `bid_error:${sessionId}`,
@@ -74,7 +112,8 @@ export async function onRequestPost(context) {
             insurance_carrier,
             state,
             pub_id,
-            media_type
+            media_type,
+            normalizedMediaType
           }
         })
       );
@@ -100,7 +139,7 @@ export async function onRequestPost(context) {
       Landing_Page:
         session.landingPage || "https://www.estrellacarinsurance.com/",
       Pub_ID: pub_id || sessionId,
-      Media_Type: media_type,
+      Media_Type: normalizedMediaType,
       User_Agent: userAgent,
       state
     };

@@ -337,7 +337,25 @@
             own_home: ownHome,
             insurance_carrier: carrier,
             state: state,
-            media_type: "Social"
+            media_type: (() => {
+              const ref = document.referrer.toLowerCase();
+
+              if (ref.includes("google.")) return "Search";
+              if (ref.includes("bing.")) return "Search";
+              if (ref.includes("yahoo.")) return "Search";
+
+              if (
+                ref.includes("facebook.") ||
+                ref.includes("instagram.") ||
+                ref.includes("tiktok.") ||
+                ref.includes("reddit.") ||
+                ref.includes("nextdoor.")
+              ) {
+                return "Social";
+              }
+
+              return "Landing_Page";
+            })()
           })
         });
 
