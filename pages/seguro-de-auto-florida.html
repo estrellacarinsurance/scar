@@ -81,12 +81,6 @@ footer{border-top:1px solid var(--line);background:#fff}.footer-wrap{padding:28p
   .quick-points{display:none}
   .form-shell{padding:18px}
 .topbar .container,.call-card,.hero-actions{flex-direction:column;align-items:stretch}.nav .container{justify-content:center}.brand{width:100%;justify-content:center;text-align:center}.sticky-mobile{position:sticky;bottom:0;display:block;background:rgba(255,255,255,.95);backdrop-filter:blur(8px);border-top:1px solid var(--line);padding:12px 16px;z-index:50}.sticky-mobile .cta-btn,.sticky-mobile .call-btn{width:100%}.sticky-mobile .actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}}
-
-
-/* NEW: fullscreen connecting experience. Does not change /api/click, /api/bid, or postback logic. */
-body.connecting-lock{overflow:hidden;touch-action:none}.connecting-overlay{position:fixed;inset:0;z-index:9999;background:linear-gradient(160deg,rgba(15,23,42,.98),rgba(30,58,138,.96));display:none;align-items:center;justify-content:center;padding:20px}.connecting-overlay.is-active{display:flex}.connecting-card{width:min(520px,100%);background:#fff;border:1px solid rgba(255,255,255,.2);border-radius:30px;padding:26px 22px;box-shadow:0 30px 90px rgba(0,0,0,.35);text-align:center}.connecting-logo{height:72px;margin:0 auto 6px}.connecting-kicker{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:#eff6ff;color:#0b5fff;border:1px solid #bfdbfe;border-radius:999px;padding:8px 12px;font-size:13px;font-weight:800;margin:8px 0 14px}.connecting-title{font-size:clamp(1.7rem,6vw,2.45rem);line-height:1.04;letter-spacing:-.04em;margin:0 0 10px;color:#0f172a}.connecting-message{font-size:1.05rem;color:#334155;margin:0 auto 18px;max-width:380px;min-height:52px;display:flex;align-items:center;justify-content:center}.connecting-steps{display:grid;gap:10px;text-align:left;margin:18px 0}.connecting-step{display:flex;align-items:center;gap:10px;border:1px solid #e2e8f0;border-radius:16px;padding:12px;background:#f8fafc;color:#64748b;font-size:14px;font-weight:700}.connecting-step .dot{width:22px;height:22px;border-radius:999px;display:inline-flex;align-items:center;justify-content:center;background:#e2e8f0;color:#64748b;font-size:12px;font-weight:900;flex:0 0 auto}.connecting-step.is-active{border-color:#bfdbfe;background:#eff6ff;color:#0b5fff}.connecting-step.is-done{border-color:#bbf7d0;background:#f0fdf4;color:#166534}.connecting-step.is-done .dot{background:#22c55e;color:#fff}.connecting-step.is-active .dot{background:#0b5fff;color:#fff;animation:pulseDot 1.05s infinite}.loader-ring{width:64px;height:64px;margin:8px auto 12px;border:6px solid #dbeafe;border-top-color:#0b5fff;border-radius:50%;animation:spin .8s linear infinite}.connecting-card.success .loader-ring{border-color:#bbf7d0;background:#22c55e;position:relative;animation:none}.connecting-card.success .loader-ring:after{content:"✓";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#fff;font-size:38px;font-weight:900}.connecting-actions{display:grid;gap:10px;margin-top:14px}.connecting-call-btn{display:none;width:100%;border:0;border-radius:999px;background:#f59e0b;color:#111827;font-size:1.1rem;font-weight:900;padding:16px 18px;cursor:pointer}.connecting-call-btn.is-visible{display:inline-flex;align-items:center;justify-content:center}.connecting-small{font-size:12px;color:#64748b;line-height:1.45;margin:8px 0 0}.connecting-close{border:0;background:transparent;color:#64748b;text-decoration:underline;font-weight:700;cursor:pointer;padding:8px}@keyframes spin{to{transform:rotate(360deg)}}@keyframes pulseDot{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(.86);opacity:.72}}
-@media (max-width:720px){.connecting-overlay{padding:12px}.connecting-card{border-radius:24px;padding:22px 16px}.connecting-logo{height:58px}.connecting-step{font-size:13px}.connecting-message{font-size:1rem}}
-
 </style>
 <!-- Meta Pixel Code -->
 <script>
@@ -296,209 +290,89 @@ fbq('track', 'PageView');
 <a class="call-btn" href="#quote">Iniciar Formulario</a>
 </div>
 </div>
-
-<!-- NEW: dynamic connecting overlay shown after form submit while /api/bid is running -->
-<div id="connectingOverlay" class="connecting-overlay" role="dialog" aria-modal="true" aria-live="polite" aria-label="Connecting to live agent">
-  <div id="connectingCard" class="connecting-card">
-    <img src="../img/logo.png" alt="Estrella Car Insurance" class="connecting-logo">
-    <div class="connecting-kicker">Live availability check</div>
-    <div class="loader-ring" aria-hidden="true"></div>
-    <h2 id="connectingTitle" class="connecting-title">Checking your options...</h2>
-    <p id="connectingMessage" class="connecting-message">Please keep this screen open while we match your profile with an available insurance partner.</p>
-    <div class="connecting-steps" aria-label="Connection progress">
-      <div class="connecting-step is-active" data-step="1"><span class="dot">1</span><span>Reviewing your ZIP code and profile</span></div>
-      <div class="connecting-step" data-step="2"><span class="dot">2</span><span>Checking live partner availability</span></div>
-      <div class="connecting-step" data-step="3"><span class="dot">3</span><span>Preparing your phone connection</span></div>
-    </div>
-    <div class="connecting-actions">
-      <a id="connectingCallButton" class="connecting-call-btn" href="#">Call My Agent Now</a>
-      <button id="connectingClose" type="button" class="connecting-close" style="display:none;">Return to form</button>
-    </div>
-    <p id="connectingSmall" class="connecting-small">This usually takes a few seconds. Do not close this page.</p>
-  </div>
-</div>
-
 <script>
 document.addEventListener("DOMContentLoaded", function () {
   const form = document.getElementById("quoteForm");
   const message = document.getElementById("formMessage");
-  const overlay = document.getElementById("connectingOverlay");
-  const card = document.getElementById("connectingCard");
-  const title = document.getElementById("connectingTitle");
-  const overlayMessage = document.getElementById("connectingMessage");
-  const callButton = document.getElementById("connectingCallButton");
-  const closeButton = document.getElementById("connectingClose");
-  const smallText = document.getElementById("connectingSmall");
-  const submitButton = form ? form.querySelector('button[type="submit"]') : null;
-  let statusTimer = null;
+  if (!form || !message) return;
 
-  if (!form || !message || !overlay || !card || !title || !overlayMessage || !callButton || !closeButton || !smallText) return;
-
-  const statusMessages = [
-    "Reviewing your driver profile...",
-    "Checking available insurance partners in your area...",
-    "Looking for a live agent that matches your profile...",
-    "Preparing your phone connection...",
-    "Almost done. Please keep this screen open."
-  ];
-
-  function setMessage(text, color) { message.textContent = text; message.style.color = color || "#475569"; }
+  function setMessage(text, color) {
+    message.textContent = text;
+    message.style.color = color || "#475569";
+  }
   function cleanText(value) { return (value || "").trim(); }
-  function isValidPhone(value) { const digits = (value || "").replace(/\D/g, ""); return digits.length === 10 || digits.length === 11; }
-  function normalizePhone(value) { const digits = (value || "").replace(/\D/g, ""); if (digits.length === 10) return "+1" + digits; if (digits.length === 11 && digits.startsWith("1")) return "+" + digits; return value; }
+  function isValidPhone(value) {
+    const digits = (value || "").replace(/\D/g, "");
+    return digits.length === 10 || digits.length === 11;
+  }
+  function normalizePhone(value) {
+    const digits = (value || "").replace(/\D/g, "");
+    if (digits.length === 10) return "+1" + digits;
+    if (digits.length === 11 && digits.startsWith("1")) return "+" + digits;
+    return value;
+  }
   function isValidZip(value) { return /^\d{5}$/.test((value || "").trim()); }
-  function isValidState(value) { return /^[A-Z]{2}$/.test((value || "").trim().toUpperCase()); }
-
-  async function ensureSessionId() {
-    let sessionId = window.__sessionId || localStorage.getItem("sessionId") || "";
-    if (sessionId) return sessionId;
-    const qs = window.location.search || "";
-    const res = await fetch("/api/click" + qs);
-    const data = await res.json();
-    if (data.ok && data.sessionId) {
-      localStorage.setItem("sessionId", data.sessionId);
-      window.__sessionId = data.sessionId;
-      return data.sessionId;
-    }
-    return "";
-  }
-
-  function setStep(activeStep) {
-    document.querySelectorAll(".connecting-step").forEach(function (step) {
-      const stepNumber = Number(step.getAttribute("data-step"));
-      step.classList.toggle("is-done", stepNumber < activeStep);
-      step.classList.toggle("is-active", stepNumber === activeStep);
-    });
-  }
-
-  function openConnecting() {
-    card.classList.remove("success");
-    overlay.classList.add("is-active");
-    document.body.classList.add("connecting-lock");
-    callButton.classList.remove("is-visible");
-    callButton.removeAttribute("href");
-    closeButton.style.display = "none";
-    title.textContent = "Checking your options...";
-    overlayMessage.textContent = "Please keep this screen open while we match your profile with an available insurance partner.";
-    smallText.textContent = "This usually takes a few seconds. Do not close this page.";
-    setStep(1);
-    let i = 0;
-    clearInterval(statusTimer);
-    statusTimer = setInterval(function () {
-      overlayMessage.textContent = statusMessages[i % statusMessages.length];
-      setStep(Math.min(3, Math.floor(i / 2) + 1));
-      i++;
-    }, 2200);
-  }
-
-  function showAgentFound(phoneNumber) {
-    clearInterval(statusTimer);
-    card.classList.add("success");
-    setStep(4);
-    title.textContent = "Agent found!";
-    overlayMessage.textContent = "Your phone is opening the call now. If it does not open automatically, tap the button below.";
-    smallText.textContent = "Tap the call button if your phone asks for confirmation.";
-    callButton.href = "tel:" + phoneNumber;
-    callButton.textContent = "Call Agent Now";
-    callButton.classList.add("is-visible");
-    closeButton.style.display = "inline-block";
-    try { if (navigator.vibrate) navigator.vibrate(180); } catch (e) {}
-  }
-
-  function showNoAgent() {
-    clearInterval(statusTimer);
-    title.textContent = "No live agent available right now";
-    overlayMessage.textContent = "We could not find an available partner for this profile right now. Please try again during active campaign hours.";
-    smallText.textContent = "You can return to the form and try again later.";
-    closeButton.style.display = "inline-block";
-    callButton.classList.remove("is-visible");
-  }
-
-  function closeConnecting() {
-    clearInterval(statusTimer);
-    overlay.classList.remove("is-active");
-    document.body.classList.remove("connecting-lock");
-  }
-
-  closeButton.addEventListener("click", closeConnecting);
+  function isValidEstado(value) { return /^[A-Z]{2}$/.test((value || "").trim().toUpperCase()); }
 
   form.addEventListener("submit", async function (e) {
     e.preventDefault();
-
     const firstName = cleanText(document.getElementById("first_name").value);
     const lastName = cleanText(document.getElementById("last_name").value);
     const phone = cleanText(document.getElementById("phone").value);
     const zipCode = cleanText(document.getElementById("zip_code").value);
     const state = cleanText(document.getElementById("state").value).toUpperCase();
     const insuredValue = document.getElementById("is_currently_insured").value;
-    const ownHomeValue = document.getElementById("own_home").value;
+    const ownInicioValue = document.getElementById("own_home").value;
     const insured = insuredValue === "true";
-    const ownHome = ownHomeValue === "true";
+    const ownInicio = ownInicioValue === "true";
     const carrier = cleanText(document.getElementById("insurance_carrier").value);
     const email = cleanText(document.getElementById("email").value);
 
-    if (!firstName) return setMessage("Please enter your first name.", "#b91c1c");
-    if (!lastName) return setMessage("Please enter your last name.", "#b91c1c");
-    if (!isValidPhone(phone)) return setMessage("Please enter a valid phone number.", "#b91c1c");
-    if (!isValidZip(zipCode)) return setMessage("Please enter a valid 5-digit ZIP code.", "#b91c1c");
-    if (!isValidState(state)) return setMessage("Please enter a valid 2-letter state code.", "#b91c1c");
-    if (insuredValue === "") return setMessage("Please select whether you are currently insured.", "#b91c1c");
-    if (ownHomeValue === "") return setMessage("Please select whether you own your home.", "#b91c1c");
+    if (!firstName) return setMessage("Por favor ingresa tu nombre.", "#b91c1c");
+    if (!lastName) return setMessage("Por favor ingresa tu apellido.", "#b91c1c");
+    if (!isValidPhone(phone)) return setMessage("Por favor ingresa un teléfono válido.", "#b91c1c");
+    if (!isValidZip(zipCode)) return setMessage("Por favor ingresa un código postal válido de 5 dígitos.", "#b91c1c");
+    if (!isValidEstado(state)) return setMessage("Por favor ingresa un código de estado válido de 2 letras.", "#b91c1c");
+    if (insuredValue === "") return setMessage("Por favor selecciona si tienes seguro actualmente.", "#b91c1c");
+    if (ownInicioValue === "") return setMessage("Por favor selecciona si eres dueño de tu casa.", "#b91c1c");
 
-    setMessage("Checking live availability...", "#166534");
-    openConnecting();
-    if (submitButton) submitButton.disabled = true;
+    setMessage("Revisando disponibilidad en vivo...", "#166534");
 
     try {
-      const sessionId = await ensureSessionId();
-      if (!sessionId) throw new Error("Session could not be created");
-
       const res = await fetch("/api/bid", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          sessionId: sessionId,
+          sessionId: window.__sessionId || localStorage.getItem("sessionId") || "",
           first_name: firstName,
           last_name: lastName,
           email: email,
           caller_id: normalizePhone(phone),
           zip_code: zipCode,
           is_currently_insured: insured,
-          own_home: ownHome,
+          own_home: ownInicio,
           insurance_carrier: carrier,
           state: state,
           media_type: "Social"
         })
       });
 
+      const sessionId = window.__sessionId || localStorage.getItem("sessionId") || "";
+      if (!sessionId) {
+        return setMessage("Tu sesión todavía está cargando. Inténtalo de nuevo en un momento.", "#b91c1c");
+      }
+
       const data = await res.json();
-
       if (data.ok && data.is_available && data.target_number) {
-        const phoneNumber = data.target_number.replace(/[^\d+]/g, "");
-        setMessage("Agent available now. Connecting your call...", "#166534");
-        showAgentFound(phoneNumber);
-
-        try {
-          if (typeof fbq === "function") { fbq("track", "Lead"); fbq("track", "Contact"); }
-          if (typeof gtag === "function") {
-            gtag("event", "lead_bid_accepted", { event_category: "pay_per_call", event_label: "agent_found" });
-          }
-        } catch (trackingError) { console.warn("Tracking failed:", trackingError); }
-
-        setTimeout(function () { window.location.href = "tel:" + phoneNumber; }, 900);
+        setMessage("Agente disponible ahora. Conectando tu llamada...", "#166534");
+        setTimeout(function () {
+          window.location.href = "tel:" + data.target_number.replace(/[^\d+]/g, "");
+        }, 500);
       } else {
-        setMessage("No agent is available right now for this profile. Please try again during campaign hours.", "#b45309");
-        showNoAgent();
+        setMessage("No hay agente disponible ahora mismo para este perfil. Inténtalo de nuevo durante el horario de campaña.", "#b45309");
       }
     } catch (err) {
-      setMessage("We could not check availability right now. Please try again.", "#b91c1c");
-      clearInterval(statusTimer);
-      title.textContent = "Connection issue";
-      overlayMessage.textContent = "We could not check live availability right now. Please return to the form and try again.";
-      smallText.textContent = "Your information was not connected to an agent.";
-      closeButton.style.display = "inline-block";
-    } finally {
-      if (submitButton) submitButton.disabled = false;
+      setMessage("No pudimos revisar la disponibilidad ahora mismo. Inténtalo de nuevo.", "#b91c1c");
     }
   });
 });

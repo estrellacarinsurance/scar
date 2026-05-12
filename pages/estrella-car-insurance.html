@@ -91,13 +91,7 @@
       background: #fff;
       border-top: 1px solid #eee;
     }
-  
-
-/* NEW: fullscreen connecting experience. Does not change /api/click, /api/bid, or postback logic. */
-body.connecting-lock{overflow:hidden;touch-action:none}.connecting-overlay{position:fixed;inset:0;z-index:9999;background:linear-gradient(160deg,rgba(15,23,42,.98),rgba(30,58,138,.96));display:none;align-items:center;justify-content:center;padding:20px}.connecting-overlay.is-active{display:flex}.connecting-card{width:min(520px,100%);background:#fff;border:1px solid rgba(255,255,255,.2);border-radius:30px;padding:26px 22px;box-shadow:0 30px 90px rgba(0,0,0,.35);text-align:center}.connecting-logo{height:72px;margin:0 auto 6px}.connecting-kicker{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:#eff6ff;color:#0b5fff;border:1px solid #bfdbfe;border-radius:999px;padding:8px 12px;font-size:13px;font-weight:800;margin:8px 0 14px}.connecting-title{font-size:clamp(1.7rem,6vw,2.45rem);line-height:1.04;letter-spacing:-.04em;margin:0 0 10px;color:#0f172a}.connecting-message{font-size:1.05rem;color:#334155;margin:0 auto 18px;max-width:380px;min-height:52px;display:flex;align-items:center;justify-content:center}.connecting-steps{display:grid;gap:10px;text-align:left;margin:18px 0}.connecting-step{display:flex;align-items:center;gap:10px;border:1px solid #e2e8f0;border-radius:16px;padding:12px;background:#f8fafc;color:#64748b;font-size:14px;font-weight:700}.connecting-step .dot{width:22px;height:22px;border-radius:999px;display:inline-flex;align-items:center;justify-content:center;background:#e2e8f0;color:#64748b;font-size:12px;font-weight:900;flex:0 0 auto}.connecting-step.is-active{border-color:#bfdbfe;background:#eff6ff;color:#0b5fff}.connecting-step.is-done{border-color:#bbf7d0;background:#f0fdf4;color:#166534}.connecting-step.is-done .dot{background:#22c55e;color:#fff}.connecting-step.is-active .dot{background:#0b5fff;color:#fff;animation:pulseDot 1.05s infinite}.loader-ring{width:64px;height:64px;margin:8px auto 12px;border:6px solid #dbeafe;border-top-color:#0b5fff;border-radius:50%;animation:spin .8s linear infinite}.connecting-card.success .loader-ring{border-color:#bbf7d0;background:#22c55e;position:relative;animation:none}.connecting-card.success .loader-ring:after{content:"✓";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#fff;font-size:38px;font-weight:900}.connecting-actions{display:grid;gap:10px;margin-top:14px}.connecting-call-btn{display:none;width:100%;border:0;border-radius:999px;background:#f59e0b;color:#111827;font-size:1.1rem;font-weight:900;padding:16px 18px;cursor:pointer}.connecting-call-btn.is-visible{display:inline-flex;align-items:center;justify-content:center}.connecting-small{font-size:12px;color:#64748b;line-height:1.45;margin:8px 0 0}.connecting-close{border:0;background:transparent;color:#64748b;text-decoration:underline;font-weight:700;cursor:pointer;padding:8px}@keyframes spin{to{transform:rotate(360deg)}}@keyframes pulseDot{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(.86);opacity:.72}}
-@media (max-width:720px){.connecting-overlay{padding:12px}.connecting-card{border-radius:24px;padding:22px 16px}.connecting-logo{height:58px}.connecting-step{font-size:13px}.connecting-message{font-size:1rem}}
-
-</style>
+  </style>
 <!-- Meta Pixel Code -->
 <script>
 !function(f,b,e,v,n,t,s)
@@ -185,28 +179,5 @@ fbq('track', 'PageView');
 </p>
 <p>© 2026 Estrella Car Insurance. All rights reserved.</p>
 </footer>
-
-
-<!-- NEW: dynamic connecting overlay shown after form submit while /api/bid is running -->
-<div id="connectingOverlay" class="connecting-overlay" role="dialog" aria-modal="true" aria-live="polite" aria-label="Connecting to live agent">
-  <div id="connectingCard" class="connecting-card">
-    <img src="../img/logo.png" alt="Estrella Car Insurance" class="connecting-logo">
-    <div class="connecting-kicker">Live availability check</div>
-    <div class="loader-ring" aria-hidden="true"></div>
-    <h2 id="connectingTitle" class="connecting-title">Checking your options...</h2>
-    <p id="connectingMessage" class="connecting-message">Please keep this screen open while we match your profile with an available insurance partner.</p>
-    <div class="connecting-steps" aria-label="Connection progress">
-      <div class="connecting-step is-active" data-step="1"><span class="dot">1</span><span>Reviewing your ZIP code and profile</span></div>
-      <div class="connecting-step" data-step="2"><span class="dot">2</span><span>Checking live partner availability</span></div>
-      <div class="connecting-step" data-step="3"><span class="dot">3</span><span>Preparing your phone connection</span></div>
-    </div>
-    <div class="connecting-actions">
-      <a id="connectingCallButton" class="connecting-call-btn" href="#">Call My Agent Now</a>
-      <button id="connectingClose" type="button" class="connecting-close" style="display:none;">Return to form</button>
-    </div>
-    <p id="connectingSmall" class="connecting-small">This usually takes a few seconds. Do not close this page.</p>
-  </div>
-</div>
-
 </body>
 </html>
