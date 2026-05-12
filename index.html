@@ -277,7 +277,7 @@
       setStep(2);
       title.textContent = "No live agent available right now";
       overlayMessage.textContent = serverMessage || "We could not find an available insurance partner for this profile right now.";
-      smallText.textContent = "Best time to try: Monday-Friday, 9 AM-8 PM Eastern. You can return to the form and try again later.";
+      smallText.textContent = "Best time to try depends on your state and active campaign tiers. You can return to the form and try again later.";
       closeButton.style.display = "inline-block";
       callButton.classList.remove("is-visible");
       callButton.removeAttribute("href");
@@ -375,13 +375,19 @@
 
           setTimeout(function () { window.location.href = "tel:" + phoneNumber; }, 900);
         } else {
-          const unavailableMessage = data.message || "No agent is available right now for this profile. Please try again during campaign hours.";
+          const unavailableMessage = data.message || "No agent is available right now for this profile. Please try again during active campaign hours for your state.";
           setMessage(unavailableMessage, "#b45309");
           showNoAgent(unavailableMessage);
 
           try {
             if (typeof gtag === "function") {
-              gtag("event", "lead_bid_unavailable", { event_category: "pay_per_call", event_label: "no_agent_available" });
+              gtag("event", data.blocked ? "lead_bid_blocked_hours" : "lead_bid_unavailable", {
+                event_category: "pay_per_call",
+                event_label: data.blocked ? "outside_state_tier_hours" : "no_agent_available",
+                state: state,
+                local_time: data.local_time || "",
+                time_zone: data.time_zone || ""
+              });
             }
           } catch (trackingError) { console.warn("Unavailable tracking failed:", trackingError); }
         }
