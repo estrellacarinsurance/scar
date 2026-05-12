@@ -138,6 +138,11 @@ export async function onRequestPost(context) {
     if (prefix && id) await kv.put(`${prefix}:${createdDate}:${id}`, value);
   }
 
+  async function saveBidError(sessionId, record, createdDate = dateKey()) {
+    const id = sessionId || crypto.randomUUID();
+    await putBothKeys(env.TRACKER_KV, `bid_error:${id}`, JSON.stringify(record), createdDate);
+  }
+
   try {
     const body = await request.json();
     const {
@@ -157,19 +162,44 @@ export async function onRequestPost(context) {
     const isInsured = boolValue(is_currently_insured);
     const createdAt = nowIso();
     const today = dateKey();
+    const requestId = sessionId || crypto.randomUUID();
+
+    const receivedRecord = {
+      createdAt,
+      type: "bid_received",
+      sessionId: sessionId || null,
+      body: {
+        sessionId: sessionId || null,
+        caller_id_last4: String(caller_id || "").replace(/\D/g, "").slice(-4),
+        zip_code: normalizedZip,
+        state: normalizedState,
+        is_currently_insured: isInsured,
+        own_home: boolValue(own_home),
+        insurance_carrier,
+        pub_id,
+        media_type
+      }
+    };
+    await putBothKeys(env.TRACKER_KV, `bid_received:${requestId}`, JSON.stringify(receivedRecord), today);
 
     if (!sessionId || !caller_id) {
+      await saveBidError(requestId, { ...receivedRecord, type: "bid_validation_error", error: "Missing sessionId or caller_id" }, today);
       return Response.json({ ok: false, error: "Missing sessionId or caller_id" }, { status: 400 });
     }
     if (!isValidPhone(caller_id)) {
+      await saveBidError(requestId, { ...receivedRecord, type: "bid_validation_error", error: "Invalid caller_id" }, today);
       return Response.json({ ok: false, error: "Invalid caller_id" }, { status: 400 });
     }
     if (!normalizedState || normalizedState.length !== 2) {
+      await saveBidError(requestId, { ...receivedRecord, type: "bid_validation_error", error: "Invalid state" }, today);
       return Response.json({ ok: false, error: "Invalid state" }, { status: 400 });
     }
 
     const existing = await env.TRACKER_KV.get(`session:${sessionId}`);
-    if (!existing) return Response.json({ ok: false, error: "Invalid session" }, { status: 400 });
+    if (!existing) {
+      await saveBidError(requestId, { ...receivedRecord, type: "bid_validation_error", error: "Invalid session" }, today);
+      return Response.json({ ok: false, error: "Invalid session" }, { status: 400 });
+    }
     const session = JSON.parse(existing);
 
     const hoursCheck = getMatchingTiers({ state: normalizedState, zip: normalizedZip, isInsured });
@@ -283,6 +313,17 @@ export async function onRequestPost(context) {
       raw: mcJson
     });
   } catch (err) {
+    try {
+      const createdAt = nowIso();
+      const today = dateKey();
+      await saveBidError("exception-" + crypto.randomUUID(), {
+        createdAt,
+        type: "bid_exception",
+        error: err.message || "Bid request failed"
+      }, today);
+    } catch (logErr) {
+      console.log("Could not log bid exception", logErr);
+    }
     return Response.json({ ok: false, error: err.message || "Bid request failed" }, { status: 500 });
   }
 }

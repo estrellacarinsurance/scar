@@ -361,6 +361,21 @@
 
         const data = await res.json();
 
+        if (!data.ok) {
+          const errorMessage = data.error || "The availability check failed before reaching the partner system.";
+          setMessage(errorMessage, "#b91c1c");
+          clearInterval(statusTimer);
+          card.classList.remove("success");
+          setStep(2);
+          title.textContent = "Availability check issue";
+          overlayMessage.textContent = errorMessage;
+          smallText.textContent = "No lead was connected. Please return to the form and try again.";
+          closeButton.style.display = "inline-block";
+          callButton.classList.remove("is-visible");
+          callButton.removeAttribute("href");
+          return;
+        }
+
         if (data.ok && data.is_available && data.target_number) {
           const phoneNumber = data.target_number.replace(/[^\d+]/g, "");
           setMessage("Agent available now. Connecting your call...", "#166534");
