@@ -17,7 +17,7 @@ export async function onRequestPost(context) {
       insurance_carrier,
       state,
       pub_id = "",
-      media_type = "Social"
+      media_type = "Landing_Page"
     } = body;
 
     if (!sessionId || !caller_id) {
@@ -132,44 +132,13 @@ export async function onRequestPost(context) {
     const data = mcJson?.data || {};
     const isAvailable = !!data.is_available;
 
-    // Important: if MarketCall says no buyer/agent is available, return a safe
-    // front-end response that prevents the website from opening a call.
-    // This protects ad spend and avoids sending users to a dead/no-agent route.
-    if (!isAvailable) {
-      await env.TRACKER_KV.put(
-        `bid_unavailable:${sessionId}`,
-        JSON.stringify({
-          createdAt: new Date().toISOString(),
-          request: payload,
-          debugHeaders,
-          response: mcJson,
-          reason: "MarketCall returned is_available=false"
-        })
-      );
-
-      return Response.json({
-        ok: true,
-        is_available: false,
-        target_number: "",
-        payout: null,
-        duration: null,
-        expires_at: data?.expires_at || mcJson?.expires_at || null,
-        message:
-          "No live insurance agent is available for this profile right now. Please try again during active campaign hours.",
-        recommended_hours:
-          "Monday-Friday 9:00 AM-8:00 PM Eastern Time. Some tiers may also route on weekends.",
-        raw: mcJson
-      });
-    }
-
     return Response.json({
       ok: true,
-      is_available: true,
+      is_available: isAvailable,
       target_number: data.target_number || "",
       payout: data?.earn?.amount || null,
       duration: data?.terms?.duration || null,
       expires_at: data?.expires_at || mcJson?.expires_at || null,
-      message: "Live insurance agent available now.",
       raw: mcJson
     });
   } catch (err) {
