@@ -283,18 +283,24 @@
       title.textContent = "Agent found!";
       overlayMessage.textContent = "Tap the button now to connect. The routing number is time-sensitive and can expire quickly.";
       smallText.textContent = expiresAt ? ("Call route expires at " + new Date(expiresAt).toLocaleTimeString([], { hour: "numeric", minute: "2-digit", second: "2-digit" }) + ".") : "Tap the call button immediately.";
-      callButton.href = "tel:" + phoneNumber;
-      callButton.textContent = "Tap to Call Agent Now";
+      // IMPORTANT: Do NOT set href to tel: here. Some Android browsers may open it automatically
+      // because the previous user action was the form submit. Store the number and wait for a real tap.
+      callButton.href = "#";
+      callButton.dataset.phone = phoneNumber;
+      callButton.textContent = "Tap to Call Agent Now: " + phoneNumber;
       callButton.classList.add("is-visible");
       closeButton.style.display = "inline-block";
-      callButton.onclick = function () {
+      callButton.onclick = function (event) {
+        event.preventDefault();
+        const numberToCall = callButton.dataset.phone || phoneNumber;
         try {
           if (typeof gtag === "function") {
             gtag("event", "lead_call_button_clicked", { event_category: "pay_per_call", event_label: "manual_tel_click" });
           }
           if (typeof fbq === "function") { fbq("track", "Contact"); }
         } catch (trackingError) { console.warn("Call click tracking failed:", trackingError); }
-        return true;
+        window.location.href = "tel:" + numberToCall;
+        return false;
       };
       try { if (navigator.vibrate) navigator.vibrate(180); } catch (e) {}
     }
