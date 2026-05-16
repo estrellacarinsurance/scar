@@ -170,17 +170,31 @@
 
   <script>
   (async function () {
-    let sessionId = localStorage.getItem("sessionId");
-    if (!sessionId) {
+    async function createFreshSession() {
       const qs = window.location.search || "";
-      const res = await fetch("/api/click" + qs);
+      const res = await fetch("/api/click" + qs, { cache: "no-store" });
       const data = await res.json();
       if (data.ok && data.sessionId) {
         localStorage.setItem("sessionId", data.sessionId);
-        sessionId = data.sessionId;
+        localStorage.setItem("sessionCreatedAt", String(Date.now()));
+        window.__sessionId = data.sessionId;
+        return data.sessionId;
       }
+      return "";
     }
-    window.__sessionId = sessionId;
+
+    const qs = new URLSearchParams(window.location.search);
+    const isPaidVisit = qs.has("gclid") || qs.has("utm_source") || qs.has("utm_campaign") || qs.has("utm_medium");
+    const storedSessionId = localStorage.getItem("sessionId") || "";
+    const createdAt = Number(localStorage.getItem("sessionCreatedAt") || "0");
+    const sessionAgeMs = Date.now() - createdAt;
+    const sessionTooOld = !createdAt || sessionAgeMs > 2 * 60 * 60 * 1000; // refresh after 2 hours
+
+    if (!storedSessionId || isPaidVisit || sessionTooOld) {
+      await createFreshSession();
+    } else {
+      window.__sessionId = storedSessionId;
+    }
   })();
   </script>
 
@@ -217,12 +231,17 @@
 
     async function ensureSessionId() {
       let sessionId = window.__sessionId || localStorage.getItem("sessionId") || "";
-      if (sessionId) return sessionId;
+      const createdAt = Number(localStorage.getItem("sessionCreatedAt") || "0");
+      const sessionTooOld = !createdAt || (Date.now() - createdAt) > 2 * 60 * 60 * 1000;
+
+      if (sessionId && !sessionTooOld) return sessionId;
+
       const qs = window.location.search || "";
-      const res = await fetch("/api/click" + qs);
+      const res = await fetch("/api/click" + qs, { cache: "no-store" });
       const data = await res.json();
       if (data.ok && data.sessionId) {
         localStorage.setItem("sessionId", data.sessionId);
+        localStorage.setItem("sessionCreatedAt", String(Date.now()));
         window.__sessionId = data.sessionId;
         return data.sessionId;
       }
@@ -257,17 +276,26 @@
       }, 2200);
     }
 
-    function showAgentFound(phoneNumber) {
+    function showAgentFound(phoneNumber, expiresAt) {
       clearInterval(statusTimer);
       card.classList.add("success");
       setStep(4);
       title.textContent = "Agent found!";
-      overlayMessage.textContent = "Your phone is opening the call now. If it does not open automatically, tap the button below.";
-      smallText.textContent = "Tap the call button if your phone asks for confirmation.";
+      overlayMessage.textContent = "Tap the button now to connect. The routing number is time-sensitive and can expire quickly.";
+      smallText.textContent = expiresAt ? ("Call route expires at " + new Date(expiresAt).toLocaleTimeString([], { hour: "numeric", minute: "2-digit", second: "2-digit" }) + ".") : "Tap the call button immediately.";
       callButton.href = "tel:" + phoneNumber;
-      callButton.textContent = "Call Agent Now";
+      callButton.textContent = "Tap to Call Agent Now";
       callButton.classList.add("is-visible");
       closeButton.style.display = "inline-block";
+      callButton.onclick = function () {
+        try {
+          if (typeof gtag === "function") {
+            gtag("event", "lead_call_button_clicked", { event_category: "pay_per_call", event_label: "manual_tel_click" });
+          }
+          if (typeof fbq === "function") { fbq("track", "Contact"); }
+        } catch (trackingError) { console.warn("Call click tracking failed:", trackingError); }
+        return true;
+      };
       try { if (navigator.vibrate) navigator.vibrate(180); } catch (e) {}
     }
 
@@ -378,17 +406,15 @@
 
         if (data.ok && data.is_available && data.target_number) {
           const phoneNumber = data.target_number.replace(/[^\d+]/g, "");
-          setMessage("Agent available now. Connecting your call...", "#166534");
-          showAgentFound(phoneNumber);
+          setMessage("Agent available now. Tap the call button immediately.", "#166534");
+          showAgentFound(phoneNumber, data.expires_at);
 
           try {
-            if (typeof fbq === "function") { fbq("track", "Lead"); fbq("track", "Contact"); }
+            if (typeof fbq === "function") { fbq("track", "Lead"); }
             if (typeof gtag === "function") {
               gtag("event", "lead_bid_accepted", { event_category: "pay_per_call", event_label: "agent_found" });
             }
           } catch (trackingError) { console.warn("Tracking failed:", trackingError); }
-
-          setTimeout(function () { window.location.href = "tel:" + phoneNumber; }, 900);
         } else {
           const unavailableMessage = data.message || "No agent is available right now for this profile. Please try again during active campaign hours for your state.";
           setMessage(unavailableMessage, "#b45309");
