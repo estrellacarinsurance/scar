@@ -62,15 +62,60 @@
   <!-- End Meta Pixel Code -->
 
   <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-18099750591"></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-1028822557"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
 
-    gtag('config', 'AW-18099750591');
+    // Primary Google Ads account for this call conversion.
     gtag('config', 'AW-1028822557');
+
+    // Other existing tags kept active.
+    gtag('config', 'AW-18099750591');
     gtag('config', 'G-FCWVH473KH');
+
+    // Helper used when the dynamic yellow call button is clicked.
+    // It fires the Google Ads conversion first, then opens the tel: link after a short delay.
+    function reportGoogleAdsCallConversion(url, phoneNumber) {
+      var conversionSent = false;
+
+      function openDialerOnce() {
+        if (conversionSent) return;
+        conversionSent = true;
+        window.location.href = url;
+      }
+
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({
+        event: 'lead_call_button_clicked',
+        event_category: 'pay_per_call',
+        event_label: 'call_agent_now_desktop_mobile',
+        phone_last4: String(phoneNumber || '').slice(-4)
+      });
+
+      if (typeof gtag === 'function') {
+        gtag('event', 'conversion', {
+          'send_to': 'AW-1028822557/3elBCOeo8KgcEJ2syuoD',
+          'value': 1.0,
+          'currency': 'USD',
+          'transport_type': 'beacon',
+          'event_callback': openDialerOnce
+        });
+
+        gtag('event', 'lead_call_button_clicked', {
+          'event_category': 'pay_per_call',
+          'event_label': 'call_agent_now_desktop_mobile',
+          'phone_last4': String(phoneNumber || '').slice(-4),
+          'transport_type': 'beacon'
+        });
+      }
+
+      // Desktop browsers can open the app chooser too quickly.
+      // This delay gives Tag Assistant time to show the conversion event before tel: launches.
+      setTimeout(openDialerOnce, 1800);
+      return false;
+    }
   </script>
   <!-- End Google Tag Manager -->
 
