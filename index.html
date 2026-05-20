@@ -74,22 +74,6 @@
   </script>
   <!-- End Google Tag Manager -->
 
-  <!-- Event snippet for Request quote conversion page -->
-  <script>
-    gtag('event', 'conversion', {'send_to': 'AW-1028822557/3elBCOeo8KgcEJ2syuoD'});
-  </script>
-  <!-- End Event snippet for Request quote conversion page -->
-
-  <!-- Event snippet for Page view (2) conversion page -->
-  <script>
-    gtag('event', 'conversion', {
-        'send_to': 'AW-1028822557/IL_hCM7l76gcEJ2syuoD',
-        'value': 1.0,
-        'currency': 'BRL'
-    });
-  </script>
-  <!-- End Event snippet for Page view (2) conversion page -->
-
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Estrella Car Insurance">
   <meta name="twitter:description" content="Compare auto insurance options fast.">
@@ -295,7 +279,19 @@
         const numberToCall = callButton.dataset.phone || phoneNumber;
         try {
           if (typeof gtag === "function") {
-            gtag("event", "lead_call_button_clicked", { event_category: "pay_per_call", event_label: "manual_tel_click" });
+            // Google Ads conversion: fires only when the user taps the yellow Call Agent button.
+            // This avoids relying on the external phone dialer, which Tag Assistant may not detect.
+            gtag('event', 'conversion', {
+              'send_to': 'AW-1028822557/3elBCOeo8KgcEJ2syuoD',
+              'value': 1.0,
+              'currency': 'USD'
+            });
+
+            // Custom analytics event for GA4/debugging.
+            gtag("event", "lead_call_button_clicked", {
+              event_category: "pay_per_call",
+              event_label: "manual_tel_click"
+            });
           }
           if (typeof fbq === "function") { fbq("track", "Contact"); }
         } catch (trackingError) { console.warn("Call click tracking failed:", trackingError); }
