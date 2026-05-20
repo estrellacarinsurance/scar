@@ -62,33 +62,49 @@
   <!-- End Meta Pixel Code -->
 
   <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-18099750591"></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-1028822557"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
 
-    gtag('config', 'AW-18099750591');
+    // Primary Google Ads account for this click-to-call conversion.
     gtag('config', 'AW-1028822557');
+
+    // Other existing tags kept active.
+    gtag('config', 'AW-18099750591');
     gtag('config', 'G-FCWVH473KH');
   </script>
+
+  <!-- Event snippet for Click to call (3) conversion page -->
+  <script>
+    function gtag_report_conversion(url) {
+      var callback = function () {
+        if (typeof(url) != 'undefined') {
+          window.location = url;
+        }
+      };
+
+      if (typeof gtag === 'function') {
+        gtag('event', 'conversion', {
+          'send_to': 'AW-1028822557/KmQJCIuI17AcEJ2syuoD',
+          'value': 1.0,
+          'currency': 'BRL',
+          'event_callback': callback
+        });
+      }
+
+      // Fallback: if the Google callback is blocked/delayed, still open the phone app.
+      setTimeout(function () {
+        if (typeof(url) != 'undefined') {
+          window.location = url;
+        }
+      }, 2000);
+
+      return false;
+    }
+  </script>
   <!-- End Google Tag Manager -->
-
-  <!-- Event snippet for Request quote conversion page -->
-  <script>
-    gtag('event', 'conversion', {'send_to': 'AW-1028822557/3elBCOeo8KgcEJ2syuoD'});
-  </script>
-  <!-- End Event snippet for Request quote conversion page -->
-
-  <!-- Event snippet for Page view (2) conversion page -->
-  <script>
-    gtag('event', 'conversion', {
-        'send_to': 'AW-1028822557/IL_hCM7l76gcEJ2syuoD',
-        'value': 1.0,
-        'currency': 'BRL'
-    });
-  </script>
-  <!-- End Event snippet for Page view (2) conversion page -->
 
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Estrella Car Insurance">
@@ -110,22 +126,23 @@
   <link rel="preconnect" href="https://www.google.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-<script>
-function gtag_report_conversion(url) {
-  var callback = function () {
-    if (typeof(url) != 'undefined') {
-      window.location = url;
-    }
-  };
-  gtag('event', 'conversion', {
-      'send_to': 'AW-1028822557/KmQJCIuI17AcEJ2syuoD',
-      'value': 1.0,
-      'currency': 'BRL',
-      'event_callback': callback
-  });
-  return false;
-}
-</script>
+  <!-- Event snippet for Click to call (4) conversion page -->
+  <script>
+  function gtag_report_conversion(url) {
+    var callback = function () {
+      if (typeof(url) != 'undefined') {
+        window.location = url;
+      }
+    };
+    gtag('event', 'conversion', {
+        'send_to': 'AW-1028822557/KmQJCIuI17AcEJ2syuoD',
+        'value': 1.0,
+        'currency': 'BRL',
+        'event_callback': callback
+    });
+    return false;
+  }
+  </script>
 
 </head>
 
@@ -311,13 +328,16 @@ function gtag_report_conversion(url) {
       callButton.onclick = function (event) {
         event.preventDefault();
         const numberToCall = callButton.dataset.phone || phoneNumber;
+
         try {
-          if (typeof gtag === "function") {
-            gtag("event", "lead_call_button_clicked", { event_category: "pay_per_call", event_label: "manual_tel_click" });
-          }
           if (typeof fbq === "function") { fbq("track", "Contact"); }
-        } catch (trackingError) { console.warn("Call click tracking failed:", trackingError); }
-        return gtag_report_conversion("tel:" + numberToCall);
+        } catch (trackingError) { console.warn("Meta call click tracking failed:", trackingError); }
+
+        if (typeof gtag_report_conversion === "function") {
+          return gtag_report_conversion("tel:" + numberToCall);
+        }
+
+        window.location.href = "tel:" + numberToCall;
         return false;
       };
       try { if (navigator.vibrate) navigator.vibrate(180); } catch (e) {}
