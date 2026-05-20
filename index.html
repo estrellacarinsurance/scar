@@ -68,52 +68,39 @@
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
 
-    // Primary Google Ads account for this call conversion.
+    // Primary Google Ads account for this click-to-call conversion.
     gtag('config', 'AW-1028822557');
 
     // Other existing tags kept active.
     gtag('config', 'AW-18099750591');
     gtag('config', 'G-FCWVH473KH');
+  </script>
 
-    // Helper used when the dynamic yellow call button is clicked.
-    // It fires the Google Ads conversion first, then opens the tel: link after a short delay.
-    function reportGoogleAdsCallConversion(url, phoneNumber) {
-      var conversionSent = false;
-
-      function openDialerOnce() {
-        if (conversionSent) return;
-        conversionSent = true;
-        window.location.href = url;
-      }
-
-      window.dataLayer = window.dataLayer || [];
-      window.dataLayer.push({
-        event: 'lead_call_button_clicked',
-        event_category: 'pay_per_call',
-        event_label: 'call_agent_now_desktop_mobile',
-        phone_last4: String(phoneNumber || '').slice(-4)
-      });
+  <!-- Event snippet for Click to call (3) conversion page -->
+  <script>
+    function gtag_report_conversion(url) {
+      var callback = function () {
+        if (typeof(url) != 'undefined') {
+          window.location = url;
+        }
+      };
 
       if (typeof gtag === 'function') {
         gtag('event', 'conversion', {
-          'send_to': 'AW-1028822557/3elBCOeo8KgcEJ2syuoD',
+          'send_to': 'AW-1028822557/9A0VCNyp07AcEJ2syuoD',
           'value': 1.0,
-          'currency': 'USD',
-          'transport_type': 'beacon',
-          'event_callback': openDialerOnce
-        });
-
-        gtag('event', 'lead_call_button_clicked', {
-          'event_category': 'pay_per_call',
-          'event_label': 'call_agent_now_desktop_mobile',
-          'phone_last4': String(phoneNumber || '').slice(-4),
-          'transport_type': 'beacon'
+          'currency': 'BRL',
+          'event_callback': callback
         });
       }
 
-      // Desktop browsers can open the app chooser too quickly.
-      // This delay gives Tag Assistant time to show the conversion event before tel: launches.
-      setTimeout(openDialerOnce, 1800);
+      // Fallback: if the Google callback is blocked/delayed, still open the phone app.
+      setTimeout(function () {
+        if (typeof(url) != 'undefined') {
+          window.location = url;
+        }
+      }, 2000);
+
       return false;
     }
   </script>
@@ -322,46 +309,21 @@
       callButton.onclick = function (event) {
         event.preventDefault();
         const numberToCall = callButton.dataset.phone || phoneNumber;
-        let callStarted = false;
-
-        function openPhoneDialer() {
-          if (callStarted) return;
-          callStarted = true;
-          window.location.href = "tel:" + numberToCall;
-        }
 
         try {
+          if (typeof fbq === "function") { fbq("track", "Contact"); }
           if (typeof gtag === "function") {
-            // Google Ads conversion: fires only when the user taps the yellow Call Agent button.
-            // IMPORTANT: event_callback gives Google a moment to record before the browser opens tel:.
-            gtag('event', 'conversion', {
-              'send_to': 'AW-1028822557/3elBCOeo8KgcEJ2syuoD',
-              'value': 1.0,
-              'currency': 'USD',
-              'event_callback': openPhoneDialer,
-              'event_timeout': 1200
-            });
-
-            // Custom analytics event for GA4/debugging.
             gtag("event", "lead_call_button_clicked", {
               event_category: "pay_per_call",
-              event_label: "manual_tel_click",
-              event_callback: function () {},
-              event_timeout: 800
+              event_label: "manual_tel_click"
             });
-          } else {
-            openPhoneDialer();
           }
-
-          if (typeof fbq === "function") { fbq("track", "Contact"); }
         } catch (trackingError) {
           console.warn("Call click tracking failed:", trackingError);
-          openPhoneDialer();
         }
 
-        // Safety fallback: if Google callback is blocked or delayed, still open the dialer.
-        setTimeout(openPhoneDialer, 1300);
-        return false;
+        // Official Google Ads click-to-call conversion snippet.
+        return gtag_report_conversion("tel:" + numberToCall);
       };
       try { if (navigator.vibrate) navigator.vibrate(180); } catch (e) {}
     }
