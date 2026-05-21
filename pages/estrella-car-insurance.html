@@ -129,22 +129,49 @@ fbq('track', 'PageView');
   gtag('config', 'G-FCWVH473KH');
 </script>
 <!-- End Google tag (gtag.js) -->
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-1028822557"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
 
-<!-- Event snippet for Request quote conversion page -->
-<script>
-  gtag('event', 'conversion', {'send_to': 'AW-1028822557/3elBCOeo8KgcEJ2syuoD'});
-</script>
-<!-- End Event snippet for Request quote conversion page -->
+    // Primary Google Ads account for this click-to-call conversion.
+    gtag('config', 'AW-1028822557');
 
-<!-- Event snippet for Page view (2) conversion page -->
-<script>
-  gtag('event', 'conversion', {
-      'send_to': 'AW-1028822557/IL_hCM7l76gcEJ2syuoD',
-      'value': 1.0,
-      'currency': 'BRL'
-  });
-</script>
-<!-- End Event snippet for Page view (2) conversion page -->
+    // Other existing tags kept active.
+    gtag('config', 'AW-18099750591');
+    gtag('config', 'G-FCWVH473KH');
+  </script>
+
+  <!-- Event snippet for Click to call (4) conversion page -->
+  <script>
+    function gtag_report_conversion(url) {
+      var callback = function () {
+        if (typeof(url) != 'undefined') {
+          window.location = url;
+        }
+      };
+
+      if (typeof gtag === 'function') {
+        gtag('event', 'conversion', {
+          'send_to': 'AW-1028822557/KmQJCIuI17AcEJ2syuoD',
+          'value': 1.0,
+          'currency': 'BRL',
+          'event_callback': callback
+        });
+      }
+
+      // Fallback: if the Google callback is blocked/delayed, still open the phone app.
+      setTimeout(function () {
+        if (typeof(url) != 'undefined') {
+          window.location = url;
+        }
+      }, 2000);
+
+      return false;
+    }
+  </script>
 
 </head>
 <body>

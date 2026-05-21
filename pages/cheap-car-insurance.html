@@ -130,24 +130,51 @@ body.connecting-lock{overflow:hidden;touch-action:none}.connecting-overlay{posit
   gtag('config', 'G-FCWVH473KH');
 </script>
 <!-- End Google tag (gtag.js) -->
+</meta>  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-1028822557"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
 
-<!-- Event snippet for Request quote conversion page -->
-<script>
-  gtag('event', 'conversion', {'send_to': 'AW-1028822557/3elBCOeo8KgcEJ2syuoD'});
-</script>
-<!-- End Event snippet for Request quote conversion page -->
+    // Primary Google Ads account for this click-to-call conversion.
+    gtag('config', 'AW-1028822557');
 
-<!-- Event snippet for Page view (2) conversion page -->
-<script>
-  gtag('event', 'conversion', {
-      'send_to': 'AW-1028822557/IL_hCM7l76gcEJ2syuoD',
-      'value': 1.0,
-      'currency': 'BRL'
-  });
-</script>
-<!-- End Event snippet for Page view (2) conversion page -->
+    // Other existing tags kept active.
+    gtag('config', 'AW-18099750591');
+    gtag('config', 'G-FCWVH473KH');
+  </script>
 
-</meta></head>
+  <!-- Event snippet for Click to call (4) conversion page -->
+  <script>
+    function gtag_report_conversion(url) {
+      var callback = function () {
+        if (typeof(url) != 'undefined') {
+          window.location = url;
+        }
+      };
+
+      if (typeof gtag === 'function') {
+        gtag('event', 'conversion', {
+          'send_to': 'AW-1028822557/KmQJCIuI17AcEJ2syuoD',
+          'value': 1.0,
+          'currency': 'BRL',
+          'event_callback': callback
+        });
+      }
+
+      // Fallback: if the Google callback is blocked/delayed, still open the phone app.
+      setTimeout(function () {
+        if (typeof(url) != 'undefined') {
+          window.location = url;
+        }
+      }, 2000);
+
+      return false;
+    }
+  </script>
+
+</head>
 <body>
 <div class="topbar">
 <div class="container">
@@ -418,17 +445,37 @@ body.connecting-lock{overflow:hidden;touch-action:none}.connecting-overlay{posit
       }, 2200);
     }
 
-    function showAgentFound(phoneNumber) {
+    function showAgentFound(phoneNumber, expiresAt) {
       clearInterval(statusTimer);
       card.classList.add("success");
       setStep(4);
       title.textContent = "Agent found!";
-      overlayMessage.textContent = "Your phone is opening the call now. If it does not open automatically, tap the button below.";
-      smallText.textContent = "Tap the call button if your phone asks for confirmation.";
-      callButton.href = "tel:" + phoneNumber;
-      callButton.textContent = "Call Agent Now";
+      overlayMessage.textContent = "Tap the button now to connect. The routing number is time-sensitive and can expire quickly.";
+      smallText.textContent = expiresAt ? ("Call route expires at " + new Date(expiresAt).toLocaleTimeString([], { hour: "numeric", minute: "2-digit", second: "2-digit" }) + ".") : "Tap the call button immediately.";
+
+      // IMPORTANT: Do NOT auto-open tel: here. Wait for a real user tap so Google Ads can track the click conversion.
+      callButton.href = "#";
+      callButton.dataset.phone = phoneNumber;
+      callButton.textContent = "Tap to Call Agent Now: " + phoneNumber;
       callButton.classList.add("is-visible");
       closeButton.style.display = "inline-block";
+
+      callButton.onclick = function (event) {
+        event.preventDefault();
+        const numberToCall = callButton.dataset.phone || phoneNumber;
+
+        try {
+          if (typeof fbq === "function") { fbq("track", "Contact"); }
+        } catch (trackingError) { console.warn("Meta call click tracking failed:", trackingError); }
+
+        if (typeof gtag_report_conversion === "function") {
+          return gtag_report_conversion("tel:" + numberToCall);
+        }
+
+        window.location.href = "tel:" + numberToCall;
+        return false;
+      };
+
       try { if (navigator.vibrate) navigator.vibrate(180); } catch (e) {}
     }
 
@@ -525,7 +572,7 @@ body.connecting-lock{overflow:hidden;touch-action:none}.connecting-overlay{posit
         if (data.ok && data.is_available && data.target_number) {
           const phoneNumber = data.target_number.replace(/[^\d+]/g, "");
           setMessage("Agent available now. Connecting your call...", "#166534");
-          showAgentFound(phoneNumber);
+          showAgentFound(phoneNumber, data.expires_at);
 
           try {
             if (typeof fbq === "function") { fbq("track", "Lead"); fbq("track", "Contact"); }
@@ -533,8 +580,6 @@ body.connecting-lock{overflow:hidden;touch-action:none}.connecting-overlay{posit
               gtag("event", "lead_bid_accepted", { event_category: "pay_per_call", event_label: "agent_found" });
             }
           } catch (trackingError) { console.warn("Tracking failed:", trackingError); }
-
-          setTimeout(function () { window.location.href = "tel:" + phoneNumber; }, 900);
         } else {
           const unavailableMessage = data.message || "No agent is available right now for this profile. Please try again during active campaign hours for your state.";
           setMessage(unavailableMessage, "#b45309");
