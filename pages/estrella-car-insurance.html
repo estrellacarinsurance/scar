@@ -20,7 +20,8 @@
     "name": "Estrella Car Insurance",
     "url": "https://www.estrellacarinsurance.com",
     "logo": "https://www.estrellacarinsurance.com/img/logo.png",
-    "description": "Estrella Car Insurance is an online platform that helps users compare auto insurance quotes."
+    "description": "Estrella Car Insurance is an online platform that helps users compare auto insurance quotes.",
+    "telephone": "+1-833-379-0778"
   }
   </script>
 <style>
@@ -96,6 +97,16 @@
 /* NEW: fullscreen connecting experience. Does not change /api/click, /api/bid, or postback logic. */
 body.connecting-lock{overflow:hidden;touch-action:none}.connecting-overlay{position:fixed;inset:0;z-index:9999;background:linear-gradient(160deg,rgba(15,23,42,.98),rgba(30,58,138,.96));display:none;align-items:center;justify-content:center;padding:20px}.connecting-overlay.is-active{display:flex}.connecting-card{width:min(520px,100%);background:#fff;border:1px solid rgba(255,255,255,.2);border-radius:30px;padding:26px 22px;box-shadow:0 30px 90px rgba(0,0,0,.35);text-align:center}.connecting-logo{height:72px;margin:0 auto 6px}.connecting-kicker{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:#eff6ff;color:#0b5fff;border:1px solid #bfdbfe;border-radius:999px;padding:8px 12px;font-size:13px;font-weight:800;margin:8px 0 14px}.connecting-title{font-size:clamp(1.7rem,6vw,2.45rem);line-height:1.04;letter-spacing:-.04em;margin:0 0 10px;color:#0f172a}.connecting-message{font-size:1.05rem;color:#334155;margin:0 auto 18px;max-width:380px;min-height:52px;display:flex;align-items:center;justify-content:center}.connecting-steps{display:grid;gap:10px;text-align:left;margin:18px 0}.connecting-step{display:flex;align-items:center;gap:10px;border:1px solid #e2e8f0;border-radius:16px;padding:12px;background:#f8fafc;color:#64748b;font-size:14px;font-weight:700}.connecting-step .dot{width:22px;height:22px;border-radius:999px;display:inline-flex;align-items:center;justify-content:center;background:#e2e8f0;color:#64748b;font-size:12px;font-weight:900;flex:0 0 auto}.connecting-step.is-active{border-color:#bfdbfe;background:#eff6ff;color:#0b5fff}.connecting-step.is-done{border-color:#bbf7d0;background:#f0fdf4;color:#166534}.connecting-step.is-done .dot{background:#22c55e;color:#fff}.connecting-step.is-active .dot{background:#0b5fff;color:#fff;animation:pulseDot 1.05s infinite}.loader-ring{width:64px;height:64px;margin:8px auto 12px;border:6px solid #dbeafe;border-top-color:#0b5fff;border-radius:50%;animation:spin .8s linear infinite}.connecting-card.success .loader-ring{border-color:#bbf7d0;background:#22c55e;position:relative;animation:none}.connecting-card.success .loader-ring:after{content:"✓";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#fff;font-size:38px;font-weight:900}.connecting-actions{display:grid;gap:10px;margin-top:14px}.connecting-call-btn{display:none;width:100%;border:0;border-radius:999px;background:#f59e0b;color:#111827;font-size:1.1rem;font-weight:900;padding:16px 18px;cursor:pointer}.connecting-call-btn.is-visible{display:inline-flex;align-items:center;justify-content:center}.connecting-small{font-size:12px;color:#64748b;line-height:1.45;margin:8px 0 0}.connecting-close{border:0;background:transparent;color:#64748b;text-decoration:underline;font-weight:700;cursor:pointer;padding:8px}@keyframes spin{to{transform:rotate(360deg)}}@keyframes pulseDot{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(.86);opacity:.72}}
 @media (max-width:720px){.connecting-overlay{padding:12px}.connecting-card{border-radius:24px;padding:22px 16px}.connecting-logo{height:58px}.connecting-step{font-size:13px}.connecting-message{font-size:1rem}}
+
+
+/* Toll-free call visibility additions */
+.phone-link{font-weight:900;color:inherit;text-decoration:none;white-space:nowrap}
+.phone-link:hover{text-decoration:underline}
+.phone-pill{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:999px;padding:10px 16px;font-weight:900;background:#f59e0b;color:#111827;box-shadow:0 10px 24px rgba(15,23,42,.10)}
+.call-strip{margin-top:18px;border:1px solid #fde68a;background:#fffbeb;border-radius:20px;padding:16px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
+.call-strip strong{display:block;color:#92400e;margin-bottom:2px}.call-strip span{color:#78350f;font-size:14px}.call-strip .phone-pill{font-size:1.05rem}
+.footer-phone{font-size:1rem;font-weight:900;color:#0f172a}
+@media (max-width:720px){.call-strip{align-items:stretch}.call-strip .phone-pill{width:100%}.topbar .phone-link{font-size:16px}.phone-pill{width:100%}}
 
 </style>
 <!-- Meta Pixel Code -->
@@ -173,22 +184,18 @@ fbq('track', 'PageView');
     }
   </script>
 
-
-<script>
-  gtag('config', 'AW-1028822557/htE-CJGJ5LccEJ2syuoD', {
-    'phone_conversion_number': '(833) 379-0778'
-  });
-</script>
-
+<script> gtag('config', 'AW-1028822557/htE-CJGJ5LccEJ2syuoD', { 'phone_conversion_number': '(833) 379-0778' }); </script>
 </head>
 <body>
 <header>
 <a href="../index.html">
 <img alt="Estrella Car Insurance" src="../img/logo.png"/>
 </a>
+<p style="margin:10px 0 0;font-weight:900;">Call now: <a class="phone-link simple-header-phone" href="tel:+18333790778" onclick="return typeof gtag_report_conversion==='function' ? gtag_report_conversion('tel:+18333790778') : true;">(833) 379-0778</a></p>
 </header>
 <main>
 <h1>Estrella Car Insurance: Stop Overpaying and Compare Smarter</h1>
+<div class="call-strip simple-main-phone"><div><strong>Call directly now</strong><span>Tap the toll-free number to open your phone dialer.</span></div><a class="phone-pill" href="tel:+18333790778" onclick="return typeof gtag_report_conversion==='function' ? gtag_report_conversion('tel:+18333790778') : true;">Call (833) 379-0778</a></div>
 <p>
 <strong>Estrella Car Insurance</strong> is an online platform that helps drivers compare auto insurance quotes quickly and easily. Our goal is to make it simple for users to explore affordable coverage options based on their needs.
   </p>
@@ -210,9 +217,10 @@ fbq('track', 'PageView');
 <p>
     Estrella Car Insurance is an independent quote comparison platform and is <strong>not affiliated with Estrella Insurance</strong> or any similarly named company. We do not issue insurance policies directly.
   </p>
-<div class="cta"><h2>Check your options before accepting a high rate</h2><a href="../index.html">Start My 60-Second Check</a></div>
+<div class="cta"><h2>Check your options before accepting a high rate</h2><p>Prefer to call? <a class="phone-link simple-cta-phone" href="tel:+18333790778" onclick="return typeof gtag_report_conversion==='function' ? gtag_report_conversion('tel:+18333790778') : true;">(833) 379-0778</a></p><a class="btn" href="../index.html">Start My 60-Second Check</a> <a class="btn" href="tel:+18333790778" onclick="return typeof gtag_report_conversion==='function' ? gtag_report_conversion('tel:+18333790778') : true;">Call (833) 379-0778</a></div>
 </main>
 <footer>
+<p class="footer-phone simple-footer-phone">Call Estrella Car Insurance: <a class="phone-link" href="tel:+18333790778" onclick="return typeof gtag_report_conversion==='function' ? gtag_report_conversion('tel:+18333790778') : true;">(833) 379-0778</a></p>
 <p>
 <a href="../privacy.html">Privacy Policy</a> |
     <a href="../terms.html">Terms of Use</a>
