@@ -132,6 +132,15 @@
 .footer-phone{font-size:1rem;font-weight:900;color:#0f172a}
 @media (max-width:720px){.call-strip{align-items:stretch}.call-strip .phone-pill{width:100%}.topbar .phone-link{font-size:16px}.phone-pill{width:100%}}
 
+
+.topbar-call-overlay{position:fixed;inset:0;z-index:10000;background:rgba(15,23,42,.72);display:none;align-items:center;justify-content:center;padding:18px}
+.topbar-call-overlay.is-active{display:flex}
+.topbar-call-card{width:min(420px,100%);background:#fff;color:#0f172a;border-radius:22px;padding:22px;text-align:center;box-shadow:0 30px 90px rgba(0,0,0,.35)}
+.topbar-call-card h3{margin:0 0 8px;font-size:1.35rem}
+.topbar-call-card p{margin:0 0 16px;color:#475569}
+.topbar-call-now{display:inline-flex;align-items:center;justify-content:center;width:100%;border-radius:999px;background:#f59e0b;color:#111827;font-weight:900;padding:15px 18px;text-decoration:none}
+.topbar-call-close{margin-top:10px;border:0;background:transparent;color:#475569;text-decoration:underline;font-weight:700;cursor:pointer}
+
 </style>
   <link rel="preconnect" href="https://www.google.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -154,11 +163,22 @@
   }
   </script>
 
-<script> gtag('config', 'AW-1028822557/htE-CJGJ5LccEJ2syuoD', { 'phone_conversion_number': '(833) 379-0778' }); </script>
+<script>
+  gtag('config', 'AW-1028822557/htE-CJGJ5LccEJ2syuoD', {
+    'phone_conversion_number': '(833) 379-0778',
+    'phone_conversion_callback': function(formatted_number, mobile_number) {
+      var topbarPhone = document.getElementById('topbar-phone');
+      if (topbarPhone) {
+        topbarPhone.textContent = formatted_number || '(833) 379-0778';
+        topbarPhone.setAttribute('data-mobile-number', mobile_number || '+18333790778');
+      }
+    }
+  });
+</script>
 </head>
 
 <body>
-  <div class="topbar"><div class="container"><div>Compare auto insurance options with confidence</div><div>Call now: <a class="phone-link" href="#" id="topbar-phone">(833) 379-0778</a></div></div></div>
+  <div class="topbar"><div class="container"><div>Compare auto insurance options with confidence</div><div>Call now: <a class="phone-link" href="#" id="topbar-phone" role="button">(833) 379-0778</a></div></div></div>
 
   <nav class="nav"><div class="container"><a href="#top" class="brand" aria-label="Estrella Car Insurance home"><img src="img/logo.png" alt="Estrella Car Insurance Logo" class="logo"><span class="brand-copy"><span class="brand-title">Estrella Car Insurance</span><span class="brand-subtitle">Auto Quote Options</span></span></a><div class="nav-links"><a href="#benefits">Benefits</a><a href="#why-us">Why choose us</a><a href="#faq">FAQ</a><a class="phone-pill nav-phone-call" href="tel:+18333790778" onclick="return typeof gtag_report_conversion==='function' ? gtag_report_conversion('tel:+18333790778') : true;">Call (833) 379-0778</a><a href="#quote" class="cta-btn">Get My Quote</a></div></div></nav>
 
@@ -515,21 +535,74 @@
   });
   </script>
 
+
+<div id="topbarCallOverlay" class="topbar-call-overlay" aria-live="polite">
+  <div class="topbar-call-card">
+    <h3>Ready to call?</h3>
+    <p>Google tracking has been triggered. Tap below to open your phone dialer.</p>
+    <a id="topbarCallNow" class="topbar-call-now" href="tel:+18333790778">Call (833) 379-0778</a>
+    <button id="topbarCallClose" class="topbar-call-close" type="button">Close</button>
+  </div>
+</div>
+
+
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  var el = document.getElementById('topbar-phone');
-  if (!el) return;
-  el.addEventListener('click', function(e) {
-    e.preventDefault();
+  var topbar = document.getElementById('topbar-phone');
+  var overlay = document.getElementById('topbarCallOverlay');
+  var callNow = document.getElementById('topbarCallNow');
+  var closeBtn = document.getElementById('topbarCallClose');
+
+  if (!topbar) return;
+
+  function sendTopbarTracking() {
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      event: 'topbar_phone_click',
+      phone_number: '(833) 379-0778',
+      phone_number_plain: '+18333790778'
+    });
+
     if (typeof gtag === 'function') {
       gtag('event', 'conversion', {
-        'send_to': 'AW-1028822557/KmQJCIuI17AcEJ2syuoD'
+        'send_to': 'AW-1028822557/KmQJCIuI17AcEJ2syuoD',
+        'value': 1.0,
+        'currency': 'USD'
+      });
+
+      gtag('event', 'conversion', {
+        'send_to': 'AW-1028822557/htE-CJGJ5LccEJ2syuoD',
+        'value': 1.0,
+        'currency': 'USD'
       });
     }
-    setTimeout(function() {
-      window.location.href='tel:+18333790778';
-    },1500);
+
+    try {
+      if (typeof fbq === 'function') fbq('track', 'Contact');
+    } catch(e) {}
+  }
+
+  topbar.addEventListener('click', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    sendTopbarTracking();
+
+    var mobileNumber = topbar.getAttribute('data-mobile-number') || '+18333790778';
+    if (callNow) {
+      callNow.href = 'tel:' + mobileNumber;
+      callNow.textContent = 'Call ' + (topbar.textContent || '(833) 379-0778');
+    }
+
+    if (overlay) overlay.classList.add('is-active');
+    return false;
   });
+
+  if (closeBtn && overlay) {
+    closeBtn.addEventListener('click', function() {
+      overlay.classList.remove('is-active');
+    });
+  }
 });
 </script>
 
