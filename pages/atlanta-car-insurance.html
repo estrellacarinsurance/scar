@@ -87,16 +87,6 @@ footer{border-top:1px solid var(--line);background:#fff}.footer-wrap{padding:28p
 body.connecting-lock{overflow:hidden;touch-action:none}.connecting-overlay{position:fixed;inset:0;z-index:9999;background:linear-gradient(160deg,rgba(15,23,42,.98),rgba(30,58,138,.96));display:none;align-items:center;justify-content:center;padding:20px}.connecting-overlay.is-active{display:flex}.connecting-card{width:min(520px,100%);background:#fff;border:1px solid rgba(255,255,255,.2);border-radius:30px;padding:26px 22px;box-shadow:0 30px 90px rgba(0,0,0,.35);text-align:center}.connecting-logo{height:72px;margin:0 auto 6px}.connecting-kicker{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:#eff6ff;color:#0b5fff;border:1px solid #bfdbfe;border-radius:999px;padding:8px 12px;font-size:13px;font-weight:800;margin:8px 0 14px}.connecting-title{font-size:clamp(1.7rem,6vw,2.45rem);line-height:1.04;letter-spacing:-.04em;margin:0 0 10px;color:#0f172a}.connecting-message{font-size:1.05rem;color:#334155;margin:0 auto 18px;max-width:380px;min-height:52px;display:flex;align-items:center;justify-content:center}.connecting-steps{display:grid;gap:10px;text-align:left;margin:18px 0}.connecting-step{display:flex;align-items:center;gap:10px;border:1px solid #e2e8f0;border-radius:16px;padding:12px;background:#f8fafc;color:#64748b;font-size:14px;font-weight:700}.connecting-step .dot{width:22px;height:22px;border-radius:999px;display:inline-flex;align-items:center;justify-content:center;background:#e2e8f0;color:#64748b;font-size:12px;font-weight:900;flex:0 0 auto}.connecting-step.is-active{border-color:#bfdbfe;background:#eff6ff;color:#0b5fff}.connecting-step.is-done{border-color:#bbf7d0;background:#f0fdf4;color:#166534}.connecting-step.is-done .dot{background:#22c55e;color:#fff}.connecting-step.is-active .dot{background:#0b5fff;color:#fff;animation:pulseDot 1.05s infinite}.loader-ring{width:64px;height:64px;margin:8px auto 12px;border:6px solid #dbeafe;border-top-color:#0b5fff;border-radius:50%;animation:spin .8s linear infinite}.connecting-card.success .loader-ring{border-color:#bbf7d0;background:#22c55e;position:relative;animation:none}.connecting-card.success .loader-ring:after{content:"✓";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#fff;font-size:38px;font-weight:900}.connecting-actions{display:grid;gap:10px;margin-top:14px}.connecting-call-btn{display:none;width:100%;border:0;border-radius:999px;background:#f59e0b;color:#111827;font-size:1.1rem;font-weight:900;padding:16px 18px;cursor:pointer}.connecting-call-btn.is-visible{display:inline-flex;align-items:center;justify-content:center}.connecting-small{font-size:12px;color:#64748b;line-height:1.45;margin:8px 0 0}.connecting-close{border:0;background:transparent;color:#64748b;text-decoration:underline;font-weight:700;cursor:pointer;padding:8px}@keyframes spin{to{transform:rotate(360deg)}}@keyframes pulseDot{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(.86);opacity:.72}}
 @media (max-width:720px){.connecting-overlay{padding:12px}.connecting-card{border-radius:24px;padding:22px 16px}.connecting-logo{height:58px}.connecting-step{font-size:13px}.connecting-message{font-size:1rem}}
 
-
-/* Toll-free call visibility additions */
-.phone-link{font-weight:900;color:inherit;text-decoration:none;white-space:nowrap}
-.phone-link:hover{text-decoration:underline}
-.phone-pill{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:999px;padding:10px 16px;font-weight:900;background:#f59e0b;color:#111827;box-shadow:0 10px 24px rgba(15,23,42,.10)}
-.call-strip{margin-top:18px;border:1px solid #fde68a;background:#fffbeb;border-radius:20px;padding:16px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
-.call-strip strong{display:block;color:#92400e;margin-bottom:2px}.call-strip span{color:#78350f;font-size:14px}.call-strip .phone-pill{font-size:1.05rem}
-.footer-phone{font-size:1rem;font-weight:900;color:#0f172a}
-@media (max-width:720px){.call-strip{align-items:stretch}.call-strip .phone-pill{width:100%}.topbar .phone-link{font-size:16px}.phone-pill{width:100%}}
-
 </style>
 <!-- Meta Pixel Code -->
 <script>
@@ -173,6 +163,13 @@ fbq('track', 'PageView');
     }
   </script>
 
+
+<script>
+  gtag('config', 'AW-1028822557/htE-CJGJ5LccEJ2syuoD', {
+    'phone_conversion_number': '(833) 379-0778'
+  });
+</script>
+
 </head>
 <body>
 <div class="topbar">
@@ -195,7 +192,6 @@ fbq('track', 'PageView');
 <a href="#why-us">Why Drivers Use Estrella</a>
 <a href="#faq">Frequently asked questions</a>
 <a class="cta-btn" href="#quote">Connect to a Live Agent</a>
-<a class="phone-pill nav-phone-call" href="tel:+18333790778" onclick="return typeof gtag_report_conversion==='function' ? gtag_report_conversion('tel:+18333790778') : true;">Call (833) 379-0778</a>
 </div>
 </div>
 </nav>
@@ -206,8 +202,7 @@ fbq('track', 'PageView');
 <div class="eyebrow">Fast qualification check</div>
 <h1>Stop Overpaying for Atlanta Car Insurance — Check If You Qualify Today</h1>
 <p>Many drivers pay more than they should because they never check other options. Complete the quick form below to see if an insurance partner is available for your profile, then continue to the call when the phone connection appears.</p>
-<div class="call-strip direct-call-strip"><div><strong>Call directly now</strong><span>Tap the toll-free number to open your phone dialer.</span></div><a class="phone-pill" href="tel:+18333790778" onclick="return typeof gtag_report_conversion==='function' ? gtag_report_conversion('tel:+18333790778') : true;">Call (833) 379-0778</a></div>
-<div class="hero-actions"><a class="phone-pill hero-phone-call" href="tel:+18333790778" onclick="return typeof gtag_report_conversion==='function' ? gtag_report_conversion('tel:+18333790778') : true;">Call Now (833) 379-0778</a>
+<div class="hero-actions">
 <a class="cta-btn" href="#quote">Connect to a Live Agent</a>
 <a class="secondary-btn" href="#quote">Connect to a Live Agent</a>
 </div>
@@ -215,7 +210,7 @@ fbq('track', 'PageView');
 </div>
 <aside class="hero-form" id="quote">
 <div class="form-shell">
-<h2>Check If You Qualify</h2><p style="font-weight:700;color:#0f172a;margin-bottom:10px;">Call directly now or complete the form to check live availability.</p><p style="color:#166534;font-weight:600;margin-bottom:18px;">Agents may be available right now for your profile.</p>
+<h2>Check If You Qualify</h2><p style="font-weight:700;color:#0f172a;margin-bottom:10px;">You must complete this form to unlock the phone connection.</p><p style="color:#166534;font-weight:600;margin-bottom:18px;">Agents may be available right now for your profile.</p>
 
 <div id="lead-form">
 <form class="lead-form-box" id="quoteForm">
@@ -260,7 +255,7 @@ fbq('track', 'PageView');
 </div>
 </form>
 </div>
-<div class="call-card"><div><strong>Direct toll-free call available</strong><br/><span style="color:#475569;">Call toll-free now: <a class="phone-link form-phone-call" href="tel:+18333790778" onclick="return typeof gtag_report_conversion==='function' ? gtag_report_conversion('tel:+18333790778') : true;">(833) 379-0778</a></span></div></div>
+<div class="call-card"><div><strong>Form required before calling</strong><br/><span style="color:#475569;">The phone number only appears after you complete the form and a partner is available.</span></div></div>
 </div>
 </aside>
 </div>
@@ -271,7 +266,7 @@ fbq('track', 'PageView');
 <p class="section-copy">If your rate increased, your renewal is coming, or your monthly payment feels too high, do not guess. Use the form on this page to check availability first, then continue to the call if an agent is available.</p>
 <p class="section-copy">The goal is simple: give drivers a clear path from quote request to live agent without confusion. Fill the form, check availability, and call from the number that appears.</p>
 </div>
-</section><section class="sections" style="padding-top:0;padding-bottom:36px;"><div class="container"><div class="card" style="text-align:center;background:#eff6ff;border-color:#bfdbfe;"><h2 style="margin:0 0 10px;font-size:clamp(1.4rem,3vw,2rem);">Still Paying Too Much?</h2><p style="margin:0 0 18px;color:#475569;">Complete the quick form to check whether an insurance partner is available for your profile.</p><a class="cta-btn" href="#quote">Connect to a Live Agent</a> <a class="call-btn card-phone-call" href="tel:+18333790778" onclick="return typeof gtag_report_conversion==='function' ? gtag_report_conversion('tel:+18333790778') : true;">Call (833) 379-0778</a></div></div></section>
+</section><section class="sections" style="padding-top:0;padding-bottom:36px;"><div class="container"><div class="card" style="text-align:center;background:#eff6ff;border-color:#bfdbfe;"><h2 style="margin:0 0 10px;font-size:clamp(1.4rem,3vw,2rem);">Still Paying Too Much?</h2><p style="margin:0 0 18px;color:#475569;">Complete the quick form to check whether an insurance partner is available for your profile.</p><a class="cta-btn" href="#quote">Connect to a Live Agent</a></div></div></section>
 <section class="sections" id="why-us" style="padding-top:0;">
 <div class="container">
 <h2 class="section-title">Why Drivers Use Estrella</h2>
@@ -332,7 +327,7 @@ fbq('track', 'PageView');
 <div class="sticky-mobile">
 <div class="actions">
 <a class="cta-btn" href="#quote">Connect to a Live Agent</a>
-<a class="call-btn sticky-phone-call" href="tel:+18333790778" onclick="return typeof gtag_report_conversion==='function' ? gtag_report_conversion('tel:+18333790778') : true;">Call Now</a>
+<a class="call-btn" href="#quote">Start Form</a>
 </div>
 </div>
 
